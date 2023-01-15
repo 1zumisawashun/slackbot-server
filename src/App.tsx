@@ -1,54 +1,46 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
-import { functions, httpsCallable } from "./libs/firebase";
-import { pushToSlack } from "./helpers/pushToSlack";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { StripePaymentForm } from "./components";
 import axios from "axios";
+import liff from "./libs/line";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const helloWorld = httpsCallable(functions, "helloWorld");
-  const url = import.meta.env.VITE_SLACK_INCOMING_WEBHOOK;
+  const [username, setUsername] = useState("");
+  const [paymentIntentClientSecret, setPIClientSecret] = useState("");
 
-  const handleClick = () => {
-    helloWorld();
-    // helloWorld({ name: "shun" }).then((result) => {
-    //   console.log("success");
-    //   const data = result.data;
-    //   alert(data);
-    // });
+  const asyncLiffFunc = async () => {
+    const profile = await liff.getProfile();
+    setUsername(profile.displayName);
   };
 
-  const handleSlack = () => {
-    const data = {
-      text: "yo some text",
-    };
-    axios.post(url, JSON.stringify(data));
+  const asyncStripeFunc = async () => {
+    const res: any = await axios.post(
+      "http://localhost:8000/create_payment_intent"
+    );
+    const clientSecret = res.data.client_secret;
+    setPIClientSecret(clientSecret);
   };
+
+  useEffect(() => {
+    asyncLiffFunc();
+    asyncStripeFunc();
+  }, []);
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <button onClick={handleSlack}>slack</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Hello {username}</h1>
+      {paymentIntentClientSecret ? (
+        <Elements
+          stripe={loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_API_KEY)}
+          options={{
+            clientSecret: paymentIntentClientSecret,
+          }}
+        >
+          <StripePaymentForm />
+        </Elements>
+      ) : null}
     </div>
   );
 }
