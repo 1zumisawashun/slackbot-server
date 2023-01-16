@@ -8,11 +8,16 @@ import liff from "./libs/line";
 
 function App() {
   const [username, setUsername] = useState("");
+  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [paymentIntentClientSecret, setPIClientSecret] = useState("");
 
   const asyncLiffFunc = async () => {
     const profile = await liff.getProfile();
     setUsername(profile.displayName);
+    const token = await liff.getAccessToken();
+
+    console.log("tolen");
+    setAccessToken(token);
   };
 
   const asyncStripeFunc = async () => {
@@ -30,7 +35,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Hello {username}</h1>
+      <h1>Hello World {username}</h1>
+      <p>{accessToken}</p>
       {paymentIntentClientSecret ? (
         <Elements
           stripe={loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_API_KEY)}
