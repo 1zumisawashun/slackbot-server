@@ -10,17 +10,17 @@ liff.use(new LiffMockPlugin());
 const liffId = import.meta.env.VITE_LINE_LIFF_ID ?? "";
 
 // @ts-ignore
-await liff.init({ liffId, mock: true });
+liff.init({ liffId, mock: true });
 
 if (!liff.isLoggedIn()) {
   // NOTE:未ログインユーザーの場合はLINEログイン画面にリダイレクトさせる
-  await liff.login();
+  liff.login();
 }
 
-const profile = await liff.getProfile();
-console.log(profile);
+// const profile = await liff.getProfile();
+// console.log(profile);
 
-const accessToken = await liff.getAccessToken();
-console.log({ accessToken });
+// const accessToken = await liff.getAccessToken();
+// console.log({ accessToken });
 
 export default liff;
