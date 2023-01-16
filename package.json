@@ -10,9 +10,12 @@
     "deploy": "npm run build && firebase deploy"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@line/liff": "^2.21.4",
     "@line/liff-inspector": "^1.0.2",
     "@line/liff-mock": "^1.0.3",
+    "@mui/material": "^5.11.4",
     "@stripe/react-stripe-js": "^1.16.3",
     "@stripe/stripe-js": "^1.46.0",
     "axios": "^1.2.2",

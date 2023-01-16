@@ -1,5 +1,6 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApp } from "firebase/app";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 // NOTE:firebase vite deploy＞https://ja.vitejs.dev/guide/static-deploy.html#google-firebase
 
@@ -13,7 +14,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const functions = getFunctions(app);
+initializeApp(firebaseConfig);
 
-export { functions, httpsCallable };
+const projectFunctions = getFunctions(getApp());
+const projectFirestore = getFirestore();
+
+export {
+  projectFunctions,
+  projectFirestore,
+  httpsCallable,
+  collection,
+  getDocs,
+};

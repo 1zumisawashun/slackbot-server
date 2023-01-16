@@ -23,8 +23,6 @@ export const onCallCreateVotes = functions.https.onCall((data, context) => {
   //onCallはreturnをする
   return db.collection("votes").add({
     text: data.text,
-    shop: data.shop,
-    place: data.place,
     upvotes: 0,
   });
 });

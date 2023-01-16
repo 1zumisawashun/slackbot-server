@@ -5,6 +5,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { StripePaymentForm } from "./components";
 import axios from "axios";
 import liff from "./libs/line";
+import { postSlackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "./helpers";
+import { Vote } from "./components/Vote";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -33,10 +35,15 @@ function App() {
     asyncStripeFunc();
   }, []);
 
+  const handleSlack = () => {
+    postSlackNotification(VITE_SLACK_INCOMING_WEBHOOK);
+  };
+
   return (
     <div className="App">
       <h1>Hello World {username}</h1>
       <p>{accessToken}</p>
+      <button onClick={handleSlack}>slack</button>
       {paymentIntentClientSecret ? (
         <Elements
           stripe={loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_API_KEY)}
@@ -47,6 +54,7 @@ function App() {
           <StripePaymentForm />
         </Elements>
       ) : null}
+      <Vote></Vote>
     </div>
   );
 }
