@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { StripePaymentForm } from "./components";
 import axios from "axios";
 import liff from "./libs/line";
+import stripe from "./libs/stripe";
 import { postSlackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "./helpers";
 import { Vote } from "./components/Vote";
 
@@ -46,7 +46,7 @@ function App() {
       <button onClick={handleSlack}>slack</button>
       {paymentIntentClientSecret ? (
         <Elements
-          stripe={loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_API_KEY)}
+          stripe={stripe()}
           options={{
             clientSecret: paymentIntentClientSecret,
           }}
