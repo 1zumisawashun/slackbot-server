@@ -1,30 +1,27 @@
 import { stripe } from "../../../../libs/stripe";
-import { RequestHandler } from "express";
+import * as functions from "firebase-functions";
 
-export const create: RequestHandler = async (req, res) => {
-  const { name = "テスト", price = 1000 } = req.body;
+export const create = functions.https.onCall(async (data, context) => {
+  const name = "テスト";
+  const price = 1000;
 
-  try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "jpy",
-            product_data: {
-              name: name,
-            },
-            unit_amount: price,
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "jpy",
+          product_data: {
+            name: name,
           },
-          quantity: 1,
+          unit_amount: price,
         },
-      ],
-      mode: "payment",
-      success_url: `https://www.google.com/`,
-      cancel_url: `https://www.google.com/`,
-    });
-    return res.status(200).json({ session: session });
-  } catch (error) {
-    return res.status(400).json({ status: req.body });
-  }
-};
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: `https://www.google.com/`,
+    cancel_url: `https://www.google.com/`,
+  });
+  return session;
+});

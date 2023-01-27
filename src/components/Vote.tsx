@@ -8,6 +8,11 @@ import {
   projectFunctions,
 } from "../libs/firebase";
 import { useDisclosure } from "../hooks";
+import { ONCALL_ONCALLDEFAULT } from "../constants/cloud-functions/helpers";
+import {
+  STRIPE_CHECKOUT_SESSIONS_CREATE,
+  STRIPE_PRODUCTS_CREATE,
+} from "../constants/cloud-functions/services";
 
 const NewVote = styled("div")`
   width: 100%;
@@ -50,7 +55,7 @@ export const Vote = () => {
   const handleVote = () => {
     const onCallCreateVotes = httpsCallable(
       projectFunctions,
-      "onCallCreateVotes"
+      "helpers-onCall-onCallCreateVotes"
     );
     onCallCreateVotes({ text }).catch((error) => {
       console.log(error.message);
@@ -65,6 +70,34 @@ export const Vote = () => {
       return { ...(doc.data() as Vote), id: doc.id };
     });
     setVotes(data);
+  };
+
+  // 動いているのを確認済み
+  const handleTest = async () => {
+    const onCallCreateVotes = httpsCallable(
+      projectFunctions,
+      ONCALL_ONCALLDEFAULT
+    );
+    const res = await onCallCreateVotes({ name: "だみー" });
+    console.log(res);
+  };
+
+  const handleStripeSessions = async () => {
+    const stripeCheckoutSessionsCreate = httpsCallable(
+      projectFunctions,
+      STRIPE_CHECKOUT_SESSIONS_CREATE
+    );
+    const res = await stripeCheckoutSessionsCreate();
+    console.log(res);
+  };
+
+  const handleStripeProducts = async () => {
+    const stripeProductsCreate = httpsCallable(
+      projectFunctions,
+      STRIPE_PRODUCTS_CREATE
+    );
+    const res = await stripeProductsCreate();
+    console.log(res);
   };
 
   useEffect(() => {
@@ -88,6 +121,10 @@ export const Vote = () => {
         </NewVote>
       )}
       <button onClick={modal.open}>Open</button>
+      <button onClick={handleTest}>Test</button>
+      <button onClick={handleStripeSessions}>Stripe Sessions</button>
+      <button onClick={handleStripeProducts}>Stripe Products</button>
+
       <h2>Request a Tutorial</h2>
       <ul className="request-list">
         {votes.map((vote) => (
