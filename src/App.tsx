@@ -2,16 +2,31 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { Elements } from "@stripe/react-stripe-js";
 import { StripePaymentForm } from "./components";
-import axios from "axios";
 import liff from "./libs/line";
 import stripe from "./libs/stripe";
 import { postSlackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "./helpers";
 import { Vote } from "./components/Vote";
+import { STRIPE_PAYMENTINTENT_CREATE } from "./constants/cloud-functions/services";
+import { useAuth } from "./hooks";
+import {
+  projectFirestore,
+  collection,
+  getDocs,
+  httpsCallable,
+  projectFunctions,
+} from "./libs/firebase";
+
+const params = {
+  email: "shunshun@gmail.com",
+  password: "Test1234",
+};
 
 function App() {
   const [username, setUsername] = useState("");
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [paymentIntentClientSecret, setPIClientSecret] = useState("");
+
+  const { loginWithEmailandPassword } = useAuth();
 
   const asyncLiffFunc = async () => {
     const profile = await liff.getProfile();
@@ -23,11 +38,13 @@ function App() {
   };
 
   const asyncStripeFunc = async () => {
-    const res: any = await axios.post(
-      "http://localhost:8000/create_payment_intent"
+    const stripePaymentIntentCreate = httpsCallable(
+      projectFunctions,
+      STRIPE_PAYMENTINTENT_CREATE
     );
-    const clientSecret = res.data.client_secret;
-    setPIClientSecret(clientSecret);
+    const res: any = await stripePaymentIntentCreate();
+    console.log(res, "res");
+    setPIClientSecret(res.data.client_secret);
   };
 
   useEffect(() => {
@@ -44,6 +61,7 @@ function App() {
       <h1>Hello World {username}</h1>
       <p>{accessToken}</p>
       <button onClick={handleSlack}>slack</button>
+      <button onClick={() => loginWithEmailandPassword(params)}>login</button>
       {paymentIntentClientSecret ? (
         <Elements
           stripe={stripe()}

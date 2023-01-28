@@ -8,7 +8,10 @@ import {
   projectFunctions,
 } from "../libs/firebase";
 import { useDisclosure } from "../hooks";
-import { ONCALL_ONCALLDEFAULT } from "../constants/cloud-functions/helpers";
+import {
+  ONCALL_ONCALLDEFAULT,
+  ONCALL_ONCALLCREATEVOTES,
+} from "../constants/cloud-functions/helpers";
 import {
   STRIPE_CHECKOUT_SESSIONS_CREATE,
   STRIPE_PRODUCTS_CREATE,
@@ -36,7 +39,7 @@ const Modal = styled("div")`
 type Vote = {
   id: string;
   text: string;
-  upvote: number;
+  upvotes: number;
 };
 
 export const Vote = () => {
@@ -52,14 +55,13 @@ export const Vote = () => {
     });
   };
 
-  const handleVote = () => {
+  const handleVote = async () => {
     const onCallCreateVotes = httpsCallable(
       projectFunctions,
-      "helpers-onCall-onCallCreateVotes"
+      ONCALL_ONCALLCREATEVOTES
     );
-    onCallCreateVotes({ text }).catch((error) => {
-      console.log(error.message);
-    });
+    const res = await onCallCreateVotes({ text });
+    console.log(res, "res");
     modal.close();
   };
 
@@ -70,6 +72,7 @@ export const Vote = () => {
       return { ...(doc.data() as Vote), id: doc.id };
     });
     setVotes(data);
+    console.log(data, "============");
   };
 
   // 動いているのを確認済み
@@ -130,10 +133,7 @@ export const Vote = () => {
         {votes.map((vote) => (
           <li>
             <span className="text">{vote.text}</span>
-            <div onClick={() => handleUpvote(vote.id)}>
-              <span className="votes">{vote.upvote}</span>
-              <i className="mdi mdi-check" />
-            </div>
+            <button onClick={() => handleUpvote(vote.id)}>{vote.upvotes}</button>
           </li>
         ))}
       </ul>

@@ -10,6 +10,15 @@ export const StripePaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
+  const postLiff = async (id: string | undefined) => {
+    await liff.sendMessages([
+      {
+        type: "text",
+        text: `Your payment id: ${id}`,
+      },
+    ]);
+  };
+
   const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     if (!stripe || !elements) return;
@@ -18,12 +27,7 @@ export const StripePaymentForm = () => {
       redirect: "if_required",
     });
     console.log(result);
-    await liff.sendMessages([
-      {
-        type: "text",
-        text: `Your payment id: ${result.paymentIntent?.id}`,
-      },
-    ]);
+    postLiff(result.paymentIntent?.id);
   };
 
   return (

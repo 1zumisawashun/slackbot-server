@@ -8,12 +8,13 @@ export const onCreate = functions.firestore
     const collection = context.params.collection;
     // const id = context.params.id;
     const activities = db.collection("activities");
-    if (collection === "request") {
+
+    if (collection === "votes") {
       return activities.add({
         text: "a new tutorial request was added",
       });
     }
-    if (collection === "user") {
+    if (collection === "users") {
       return activities.add({
         text: "a new user signed up",
       });
