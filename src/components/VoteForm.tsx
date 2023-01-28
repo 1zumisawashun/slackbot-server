@@ -18,7 +18,6 @@ const Modal = styled("div")`
   padding: 30px;
   border-radius: 10px;
   background: white;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   position: absolute;
   top: 0;
@@ -27,37 +26,88 @@ const Modal = styled("div")`
   bottom: 0;
   margin: auto;
 `;
-
+const GapWrapper = styled("ol")`
+  display: grid;
+  gap: 10px;
+`;
 const VoteList = styled("li")`
   padding: 10px;
   list-style-type: none;
   background: white;
   border-radius: 10px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid black;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  cursor: pointer;
 `;
 
 export const VoteForm = () => {
   const [text, setText] = useState("");
+  const [isPending, setIsPending] = useState(false);
 
   const { votes } = fetchVotes();
   const modal = useDisclosure();
   const { firestoreVotesUpdate, firestoreVotesCreate } = useFunctions();
 
   const handleVotesUpdate = async (id: string) => {
-    const res = await firestoreVotesUpdate({ id });
-    console.log(res);
+    setIsPending(true);
+    try {
+      const res = await firestoreVotesUpdate({ id });
+      console.log(res);
+      setIsPending(false);
+    } catch (error) {
+      setIsPending(false);
+    }
+  };
+  const handleVotesDelete = async (id: string) => {
+    setIsPending(true);
+    try {
+      const res = await firestoreVotesUpdate({ id });
+      console.log(res);
+      setIsPending(false);
+    } catch (error) {
+      setIsPending(false);
+    }
   };
 
   const handleVotesCreate = async () => {
-    const res = await firestoreVotesCreate({ text });
-    console.log(res);
-    modal.close();
+    if (!text) {
+      alert("未入力です。");
+      return;
+    }
+    setIsPending(true);
+    try {
+      const res = await firestoreVotesCreate({ text });
+      console.log(res);
+      setIsPending(false);
+      modal.close();
+    } catch (error) {
+      setIsPending(false);
+      modal.close();
+    }
   };
 
   return (
     <div>
+      <h2>Request a Tutorial</h2>
+      <GapWrapper>
+        {votes.map((vote) => (
+          <VoteList>
+            <p className="text">{vote.text}</p>
+            <p>{vote.upvotes}</p>
+            <div>
+              <button onClick={() => handleVotesUpdate(vote.id)} key={vote.id}>
+                投票する
+              </button>
+              <button onClick={() => handleVotesDelete(vote.id)} key={vote.id}>
+                削除する
+              </button>
+            </div>
+          </VoteList>
+        ))}
+      </GapWrapper>
+      <button onClick={modal.open}>Open Vote Modal</button>
+
       {modal.isOpen && (
         <Overlay>
           <Modal>
@@ -69,23 +119,14 @@ export const VoteForm = () => {
               onChange={(e) => setText(e.target.value)}
             />
             <div>
-              <button onClick={handleVotesCreate}>Submit</button>
-              <button onClick={modal.close}>Close</button>
+              <button onClick={handleVotesCreate}>
+                {isPending ? "送信中..." : "送信"}
+              </button>
+              <button onClick={modal.close}>閉じる</button>
             </div>
           </Modal>
         </Overlay>
       )}
-
-      <h2>Request a Tutorial</h2>
-      <ul className="request-list">
-        {votes.map((vote) => (
-          <VoteList onClick={() => handleVotesUpdate(vote.id)}>
-            <p className="text">{vote.text}</p>
-            <p>{vote.upvotes}</p>
-          </VoteList>
-        ))}
-      </ul>
-      <button onClick={modal.open}>Open Vote Modal</button>
     </div>
   );
 };

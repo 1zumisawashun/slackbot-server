@@ -1,5 +1,5 @@
 import { projectFirestore } from "../libs/firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Vote } from "../types/Vote";
 
@@ -8,7 +8,9 @@ export const fetchVotes = () => {
 
   useEffect(() => {
     const votesRef = collection(projectFirestore, "votes");
-    const unsub = onSnapshot(votesRef, (querySnapshot) => {
+    const votesQueryRef = query(votesRef, orderBy("text"));
+
+    const unsub = onSnapshot(votesQueryRef, (querySnapshot) => {
       const data = querySnapshot.docs.map((doc) => {
         return { ...(doc.data() as Vote), id: doc.id };
       });
