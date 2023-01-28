@@ -1,5 +1,5 @@
 import { initializeApp, getApp } from "firebase/app";
-import { getFunctions, httpsCallable } from "firebase/functions";
+import { getFunctions } from "firebase/functions";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
@@ -21,11 +21,4 @@ const projectFunctions = getFunctions(getApp());
 const projectFirestore = getFirestore();
 const projectAuth = getAuth();
 
-export {
-  projectFunctions,
-  projectFirestore,
-  projectAuth,
-  httpsCallable,
-  collection,
-  getDocs,
-};
+export { projectFunctions, projectFirestore, projectAuth, collection, getDocs };

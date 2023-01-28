@@ -1,21 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import {
-  projectFirestore,
-  collection,
-  getDocs,
-  httpsCallable,
-  projectFunctions,
-} from "../libs/firebase";
-import { useDisclosure } from "../hooks";
-import {
-  ONCALL_ONCALLDEFAULT,
-  ONCALL_ONCALLCREATEVOTES,
-} from "../constants/cloud-functions/helpers";
-import {
-  STRIPE_CHECKOUT_SESSIONS_CREATE,
-  STRIPE_PRODUCTS_CREATE,
-} from "../constants/cloud-functions/services";
+import { projectFirestore, collection, getDocs } from "../libs/firebase";
+import { useDisclosure, useFunctions } from "../hooks";
 
 const NewVote = styled("div")`
   width: 100%;
@@ -47,21 +33,22 @@ export const Vote = () => {
   const [text, setText] = useState("");
 
   const modal = useDisclosure();
+  const {
+    firestoreVotesUpdate,
+    firestoreVotesCreate,
+    onCallDefault,
+    stripeCheckoutSessionsCreate,
+    stripeProductsCreate,
+  } = useFunctions();
 
-  const handleUpvote = (id: string) => {
-    const onCallUpvotes = httpsCallable(projectFunctions, "onCallUpvotes");
-    onCallUpvotes({ id }).catch((error) => {
-      console.log(error.message);
-    });
+  const handleVotesUpdate = async (id: string) => {
+    const res = firestoreVotesUpdate({ id });
+    console.log(res);
   };
 
-  const handleVote = async () => {
-    const onCallCreateVotes = httpsCallable(
-      projectFunctions,
-      ONCALL_ONCALLCREATEVOTES
-    );
-    const res = await onCallCreateVotes({ text });
-    console.log(res, "res");
+  const handleVotesCreate = async () => {
+    const res = await firestoreVotesCreate({ text });
+    console.log(res);
     modal.close();
   };
 
@@ -72,33 +59,19 @@ export const Vote = () => {
       return { ...(doc.data() as Vote), id: doc.id };
     });
     setVotes(data);
-    console.log(data, "============");
   };
 
-  // 動いているのを確認済み
   const handleTest = async () => {
-    const onCallCreateVotes = httpsCallable(
-      projectFunctions,
-      ONCALL_ONCALLDEFAULT
-    );
-    const res = await onCallCreateVotes({ name: "だみー" });
+    const res = await onCallDefault({ name: "dammy text" });
     console.log(res);
   };
 
-  const handleStripeSessions = async () => {
-    const stripeCheckoutSessionsCreate = httpsCallable(
-      projectFunctions,
-      STRIPE_CHECKOUT_SESSIONS_CREATE
-    );
+  const handleStripeCheckoutSessionsCreate = async () => {
     const res = await stripeCheckoutSessionsCreate();
     console.log(res);
   };
 
-  const handleStripeProducts = async () => {
-    const stripeProductsCreate = httpsCallable(
-      projectFunctions,
-      STRIPE_PRODUCTS_CREATE
-    );
+  const handleStripeProductsCreate = async () => {
     const res = await stripeProductsCreate();
     console.log(res);
   };
@@ -106,6 +79,7 @@ export const Vote = () => {
   useEffect(() => {
     fetchVotes();
   }, []);
+
   return (
     <div>
       {modal.isOpen && (
@@ -118,22 +92,26 @@ export const Vote = () => {
               placeholder="Request..."
               onChange={(e) => setText(e.target.value)}
             />
-            <button onClick={handleVote}>Submit</button>
+            <button onClick={handleVotesCreate}>Submit</button>
             <button onClick={modal.close}>Close</button>
           </Modal>
         </NewVote>
       )}
       <button onClick={modal.open}>Open</button>
       <button onClick={handleTest}>Test</button>
-      <button onClick={handleStripeSessions}>Stripe Sessions</button>
-      <button onClick={handleStripeProducts}>Stripe Products</button>
+      <button onClick={handleStripeCheckoutSessionsCreate}>
+        Stripe Sessions
+      </button>
+      <button onClick={handleStripeProductsCreate}>Stripe Products</button>
 
       <h2>Request a Tutorial</h2>
       <ul className="request-list">
         {votes.map((vote) => (
           <li>
             <span className="text">{vote.text}</span>
-            <button onClick={() => handleUpvote(vote.id)}>{vote.upvotes}</button>
+            <button onClick={() => handleVotesUpdate(vote.id)}>
+              {vote.upvotes}
+            </button>
           </li>
         ))}
       </ul>

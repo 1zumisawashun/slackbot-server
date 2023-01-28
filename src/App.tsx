@@ -6,15 +6,7 @@ import liff from "./libs/line";
 import stripe from "./libs/stripe";
 import { postSlackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "./helpers";
 import { Vote } from "./components/Vote";
-import { STRIPE_PAYMENTINTENT_CREATE } from "./constants/cloud-functions/services";
-import { useAuth } from "./hooks";
-import {
-  projectFirestore,
-  collection,
-  getDocs,
-  httpsCallable,
-  projectFunctions,
-} from "./libs/firebase";
+import { useAuth, useFunctions } from "./hooks";
 
 const params = {
   email: "shunshun@gmail.com",
@@ -27,21 +19,17 @@ function App() {
   const [paymentIntentClientSecret, setPIClientSecret] = useState("");
 
   const { loginWithEmailandPassword } = useAuth();
+  const { stripePaymentIntentCreate } = useFunctions();
 
   const asyncLiffFunc = async () => {
     const profile = await liff.getProfile();
     setUsername(profile.displayName);
-    const token = await liff.getAccessToken();
 
-    console.log("tolen");
+    const token = await liff.getAccessToken();
     setAccessToken(token);
   };
 
   const asyncStripeFunc = async () => {
-    const stripePaymentIntentCreate = httpsCallable(
-      projectFunctions,
-      STRIPE_PAYMENTINTENT_CREATE
-    );
     const res: any = await stripePaymentIntentCreate();
     console.log(res, "res");
     setPIClientSecret(res.data.client_secret);
