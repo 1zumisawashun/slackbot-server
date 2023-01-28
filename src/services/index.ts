@@ -1,0 +1,1 @@
+export { fetchVotes } from "./fetchVotes";

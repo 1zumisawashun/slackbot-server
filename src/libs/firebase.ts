@@ -1,6 +1,6 @@
 import { initializeApp, getApp } from "firebase/app";
 import { getFunctions } from "firebase/functions";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 // NOTE:firebase vite deploy＞https://ja.vitejs.dev/guide/static-deploy.html#google-firebase
@@ -21,4 +21,4 @@ const projectFunctions = getFunctions(getApp());
 const projectFirestore = getFirestore();
 const projectAuth = getAuth();
 
-export { projectFunctions, projectFirestore, projectAuth, collection, getDocs };
+export { projectFunctions, projectFirestore, projectAuth };

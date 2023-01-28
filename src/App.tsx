@@ -5,8 +5,10 @@ import { StripePaymentForm } from "./components";
 import liff from "./libs/line";
 import stripe from "./libs/stripe";
 import { postSlackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "./helpers";
-import { Vote } from "./components/Vote";
+import { VoteForm } from "./components/VoteForm";
 import { useAuth, useFunctions } from "./hooks";
+const { onCallDefault, stripeCheckoutSessionsCreate, stripeProductsCreate } =
+  useFunctions();
 
 const params = {
   email: "shunshun@gmail.com",
@@ -29,19 +31,34 @@ function App() {
     setAccessToken(token);
   };
 
-  const asyncStripeFunc = async () => {
-    const res: any = await stripePaymentIntentCreate();
-    console.log(res, "res");
-    setPIClientSecret(res.data.client_secret);
-  };
+  // const asyncStripeFunc = async () => {
+  //   const res: any = await stripePaymentIntentCreate();
+  //   console.log(res, "res");
+  //   setPIClientSecret(res.data.client_secret);
+  // };
 
   useEffect(() => {
     asyncLiffFunc();
-    asyncStripeFunc();
+    // asyncStripeFunc();
   }, []);
 
   const handleSlack = () => {
     postSlackNotification(VITE_SLACK_INCOMING_WEBHOOK);
+  };
+
+  const handleTest = async () => {
+    const res = await onCallDefault({ name: "dammy text" });
+    console.log(res);
+  };
+
+  const handleStripeCheckoutSessionsCreate = async () => {
+    const res = await stripeCheckoutSessionsCreate();
+    console.log(res);
+  };
+
+  const handleStripeProductsCreate = async () => {
+    const res = await stripeProductsCreate();
+    console.log(res);
   };
 
   return (
@@ -50,6 +67,11 @@ function App() {
       <p>{accessToken}</p>
       <button onClick={handleSlack}>slack</button>
       <button onClick={() => loginWithEmailandPassword(params)}>login</button>
+      <button onClick={handleTest}>Test</button>
+      <button onClick={handleStripeCheckoutSessionsCreate}>
+        Stripe Sessions
+      </button>
+      <button onClick={handleStripeProductsCreate}>Stripe Products</button>
       {paymentIntentClientSecret ? (
         <Elements
           stripe={stripe()}
@@ -60,7 +82,7 @@ function App() {
           <StripePaymentForm />
         </Elements>
       ) : null}
-      <Vote></Vote>
+      <VoteForm></VoteForm>
     </div>
   );
 }
