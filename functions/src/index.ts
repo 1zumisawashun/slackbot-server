@@ -6,3 +6,6 @@ export { triggers };
 
 import * as services from "./services";
 export { services };
+
+import * as webhooks from "./webhooks";
+export { webhooks };
