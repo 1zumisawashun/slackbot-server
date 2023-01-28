@@ -92,14 +92,14 @@ export const VoteForm = () => {
       <h2>Request a Tutorial</h2>
       <GapWrapper>
         {votes.map((vote) => (
-          <VoteList>
+          <VoteList key={vote.id}>
             <p className="text">{vote.text}</p>
             <p>{vote.upvotes}</p>
             <div>
-              <button onClick={() => handleVotesUpdate(vote.id)} key={vote.id}>
+              <button onClick={() => handleVotesUpdate(vote.id)}>
                 投票する
               </button>
-              <button onClick={() => handleVotesDelete(vote.id)} key={vote.id}>
+              <button onClick={() => handleVotesDelete(vote.id)}>
                 削除する
               </button>
             </div>

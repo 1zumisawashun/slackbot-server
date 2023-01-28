@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import { db } from "../../libs/firebase";
+import { User } from "../../types/User";
 
 export const onDelete = functions.firestore
   .document("/{collection}/{id}")
@@ -17,11 +18,11 @@ export const onDelete = functions.firestore
         const userRef = db.collection("users").doc(doc.id);
         const userQuerySnapshot = await userRef.get();
 
-        const newUpvoteOn = (
-          userQuerySnapshot.data()!.upvoteOn as string[]
-        ).filter((item) => {
-          return item !== id;
-        });
+        const newUpvoteOn = (userQuerySnapshot.data() as User).upvoteOn.filter(
+          (item) => {
+            return item !== id;
+          }
+        );
 
         const res = await userRef.set({ ...doc.data(), upvoteOn: newUpvoteOn });
         console.log(res);
