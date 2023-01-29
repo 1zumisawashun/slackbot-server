@@ -1,9 +1,9 @@
+import { useState, useCallback } from "react";
 import { projectAuth } from "../libs/firebase";
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import { useEffect } from "react";
 
@@ -13,35 +13,28 @@ type Params = {
 };
 
 export const useAuth = () => {
-  const loginWithEmailandPassword = async (params: Params) => {
+  const [uid, setUid] = useState<string>("");
+
+  const login = useCallback(async (params: Params) => {
     const { email, password } = params;
     const res = await createUserWithEmailAndPassword(
       projectAuth,
       email,
       password
     );
-    console.log(res);
-  };
+    return res;
+  }, []);
 
-  const loginWithGoogle = async () => {
-    const googleProvider = new GoogleAuthProvider();
-    googleProvider.addScope(
-      "https://www.googleapis.com/auth/contacts.readonly"
-    );
-    const res = await signInWithPopup(projectAuth, googleProvider);
-    console.log(res);
-  };
+  const logout = useCallback(async () => {
+    const res = await signOut(projectAuth);
+    return res;
+  }, []);
 
   useEffect(() => {
     onAuthStateChanged(projectAuth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        console.log(uid);
-      } else {
-        console.log("user not found");
-      }
+      if (user) setUid(user.uid);
     });
   }, []);
 
-  return { loginWithEmailandPassword, loginWithGoogle };
+  return { uid, login, logout };
 };

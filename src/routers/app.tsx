@@ -1,12 +1,29 @@
 import { lazyImport } from "../utilities/lazyImport";
 import { useRoutes } from "react-router-dom";
+import { useAuth } from "../hooks";
 
 const { Checkout } = lazyImport(() => import("../pages/Checkout"), "Checkout");
 const { Login } = lazyImport(() => import("../pages/Login"), "Login");
 const { Product } = lazyImport(() => import("../pages/Product"), "Product");
 const { Top } = lazyImport(() => import("../pages/Top"), "Top");
+const { Error } = lazyImport(() => import("../pages/Error"), "Error");
 
-export const commonRoutes = [
+export const publicRoutes = [
+  {
+    path: "/",
+    element: <Top />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "*",
+    element: <Error />,
+  },
+];
+
+export const protectedRoutes = [
   {
     path: "/",
     element: <Top />,
@@ -20,12 +37,14 @@ export const commonRoutes = [
     element: <Product />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "*",
+    element: <Error />,
   },
 ];
 
 export const AppRoute: React.FC = () => {
-  const element = useRoutes([...commonRoutes]);
+  const { uid } = useAuth();
+  const route = uid ? [...protectedRoutes] : [...publicRoutes];
+  const element = useRoutes(route);
   return <>{element}</>;
 };

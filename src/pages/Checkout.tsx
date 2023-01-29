@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
+import { Checkout as CheckoutTemplate } from "../components/templates/Checkout";
 
 export const Checkout: React.FC = () => {
-  return <div>checkout</div>;
+  return <CheckoutTemplate />;
 };

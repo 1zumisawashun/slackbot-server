@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
+import { Login as LoginTemplate } from "../components/templates/Login";
 
 export const Login: React.FC = () => {
-  return <div>login</div>;
+  return <LoginTemplate />;
 };
