@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import "../../App.css";
 import { Elements } from "@stripe/react-stripe-js";
-import { StripePaymentForm } from "./components";
-import liff from "./libs/line";
-import stripe from "./libs/stripe";
-import { postSlackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "./helpers";
-import { VoteForm } from "./components/VoteForm";
-import { useAuth, useFunctions } from "./hooks";
+import { StripePaymentForm, VoteForm } from "..";
+import liff from "../../libs/line";
+import stripe from "../../libs/stripe";
+import {
+  postSlackNotification,
+  VITE_SLACK_INCOMING_WEBHOOK,
+} from "../../helpers";
+import { useAuth, useFunctions } from "../../hooks";
 const { onCallDefault, stripeCheckoutSessionsCreate, stripeProductsCreate } =
   useFunctions();
 
@@ -15,7 +17,7 @@ const params = {
   password: "Test1234",
 };
 
-function App() {
+export const Top = () => {
   const [username, setUsername] = useState("");
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [paymentIntentClientSecret, setPIClientSecret] = useState("");
@@ -85,6 +87,4 @@ function App() {
       <VoteForm></VoteForm>
     </div>
   );
-}
-
-export default App;
+};
