@@ -33,8 +33,18 @@ export const Top = () => {
   };
 
   const handleTest = async () => {
-    const res = await onCallDefault({ name: "dammy text" });
-    console.log(res);
+    const res = await onCallDefault({ name: "yo some text!" });
+    alert(res);
+  };
+
+  const postLiff = async () => {
+    const res = await liff.sendMessages([
+      {
+        type: "text",
+        text: `yo some text!`,
+      },
+    ]);
+    console.log(res, "res");
   };
 
   return (
@@ -43,6 +53,7 @@ export const Top = () => {
       <p>{accessToken}</p>
       <button onClick={handleSlack}>Slack Notification</button>
       <button onClick={handleTest}>Test</button>
+      <button onClick={postLiff}>postLiff</button>
       {uid ? (
         <button onClick={logout}>Logout</button>
       ) : (
