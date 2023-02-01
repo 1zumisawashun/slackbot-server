@@ -17,7 +17,7 @@ export const fetchVotes = () => {
       setVotes(data);
     });
     return unsub;
-  });
+  }, []);
 
   return { votes };
 };
