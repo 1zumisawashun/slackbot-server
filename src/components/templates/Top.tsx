@@ -37,14 +37,20 @@ export const Top = () => {
     alert(res);
   };
 
-  const postLiff = async () => {
-    const res = await liff.sendMessages([
-      {
-        type: "text",
-        text: `yo some text!`,
-      },
-    ]);
-    console.log(res, "res");
+  const postLiff = () => {
+    liff
+      .sendMessages([
+        {
+          type: "text",
+          text: "Hello, World!",
+        },
+      ])
+      .then(() => {
+        console.log("message sent");
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
   };
 
   return (
