@@ -6,5 +6,6 @@ export const STRIPE_PAYMENTINTENT_CREATE =
   "services-stripe-paymentIntent-create";
 
 // firestore
-export const FIRESTORE_VOTES_CREATE = "services-firestore-votes-create";
-export const FIRESTORE_VOTES_UPDATE = "services-firestore-votes-update";
+export const FIRESTORE_VOTES_CREATE = "services-firestore-votes-onCreate";
+export const FIRESTORE_VOTES_UPDATE = "services-firestore-votes-onUpdate";
+export const FIRESTORE_VOTES_DELETE = "services-firestore-votes-onDelete";

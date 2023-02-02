@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import { db, admin } from "../../../libs/firebase";
 
-export const update = functions.https.onCall(async (data, context) => {
+export const onUpdate = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
     throw new functions.https.HttpsError(
       "unauthenticated",

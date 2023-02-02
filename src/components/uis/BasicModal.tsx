@@ -8,7 +8,7 @@ const ModalInner = styled("div")<{ size: string }>`
   transform: translate(-50%, -50%);
   background-color: white;
   border-radius: 10px;
-  padding: 10px 0 50px 0;
+  padding: 50px 0;
   position: relative;
   width: ${({ size }) => {
     if (size === "small") return "600px";

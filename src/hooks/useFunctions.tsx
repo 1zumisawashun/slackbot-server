@@ -7,6 +7,7 @@ import {
   STRIPE_PAYMENTINTENT_CREATE,
   FIRESTORE_VOTES_CREATE,
   FIRESTORE_VOTES_UPDATE,
+  FIRESTORE_VOTES_DELETE,
 } from "../constants/cloud-functions/services";
 
 export const useFunctions = () => {
@@ -33,6 +34,10 @@ export const useFunctions = () => {
     projectFunctions,
     FIRESTORE_VOTES_CREATE
   );
+  const firestoreVotesDelete = httpsCallable(
+    projectFunctions,
+    FIRESTORE_VOTES_DELETE
+  );
 
   // other
   const onCallTemplate = httpsCallable(projectFunctions, ONCALLTEMPLATE);
@@ -43,6 +48,7 @@ export const useFunctions = () => {
     stripeProductsCreate,
     firestoreVotesUpdate,
     firestoreVotesCreate,
+    firestoreVotesDelete,
     onCallTemplate,
   };
 };

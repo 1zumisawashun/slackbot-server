@@ -19,8 +19,20 @@ export const publicRoutes = [
     element: <Top />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/checkout",
+    element: <Checkout />,
+  },
+  {
+    path: "/product/:id",
+    element: <Product />,
+  },
+  {
+    path: "/vote",
+    element: <Vote />,
+  },
+  {
+    path: "/component",
+    element: <Component />,
   },
   {
     path: "*",
