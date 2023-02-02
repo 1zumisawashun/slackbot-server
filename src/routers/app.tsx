@@ -19,6 +19,10 @@ export const publicRoutes = [
     element: <Top />,
   },
   {
+    path: "/login",
+    element: <Login />,
+  },
+  {
     path: "/checkout",
     element: <Checkout />,
   },
@@ -44,6 +48,10 @@ export const protectedRoutes = [
   {
     path: "/",
     element: <Top />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
   {
     path: "/checkout",
