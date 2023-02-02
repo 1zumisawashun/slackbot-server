@@ -7,6 +7,11 @@ const { Login } = lazyImport(() => import("../pages/Login"), "Login");
 const { Product } = lazyImport(() => import("../pages/Product"), "Product");
 const { Top } = lazyImport(() => import("../pages/Top"), "Top");
 const { Error } = lazyImport(() => import("../pages/Error"), "Error");
+const { Component } = lazyImport(
+  () => import("../pages/Component"),
+  "Component"
+);
+const { Vote } = lazyImport(() => import("../pages/Vote"), "Vote");
 
 export const publicRoutes = [
   {
@@ -35,6 +40,14 @@ export const protectedRoutes = [
   {
     path: "/product/:id",
     element: <Product />,
+  },
+  {
+    path: "/vote",
+    element: <Vote />,
+  },
+  {
+    path: "/component",
+    element: <Component />,
   },
   {
     path: "*",

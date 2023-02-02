@@ -1,6 +1,6 @@
 import { projectFunctions } from "../libs/firebase";
 import { httpsCallable } from "firebase/functions";
-import { ONCALL_ONCALLDEFAULT } from "../constants/cloud-functions/helpers";
+import { ONCALLTEMPLATE } from "../constants/cloud-functions/common";
 import {
   STRIPE_CHECKOUT_SESSIONS_CREATE,
   STRIPE_PRODUCTS_CREATE,
@@ -35,7 +35,7 @@ export const useFunctions = () => {
   );
 
   // other
-  const onCallDefault = httpsCallable(projectFunctions, ONCALL_ONCALLDEFAULT);
+  const onCallTemplate = httpsCallable(projectFunctions, ONCALLTEMPLATE);
 
   return {
     stripePaymentIntentCreate,
@@ -43,6 +43,6 @@ export const useFunctions = () => {
     stripeProductsCreate,
     firestoreVotesUpdate,
     firestoreVotesCreate,
-    onCallDefault,
+    onCallTemplate,
   };
 };

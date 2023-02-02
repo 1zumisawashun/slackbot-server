@@ -8,7 +8,7 @@ type SlackNotificationParams = {
 
 export const slackNotification = ({
   url,
-  isRich,
+  isRich = false,
   params,
 }: SlackNotificationParams) => {
   const request = require("request");

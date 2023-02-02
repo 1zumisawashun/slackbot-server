@@ -1,36 +1,14 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
-import { useDisclosure, useFunctions } from "../hooks";
-import { fetchVotes } from "../services";
+import { useDisclosure, useFunctions } from "../../../hooks";
+import { fetchVotes } from "../../../services";
+import { BasicModal } from "../../uis";
 
-const Overlay = styled("div")`
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1;
-  top: 0;
-  left: 0;
-`;
-const Modal = styled("div")`
-  width: 300px;
-  height: 300px;
-  padding: 30px;
-  border-radius: 10px;
-  background: white;
-  text-align: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-`;
 const GapWrapper = styled("ol")`
   display: grid;
   gap: 10px;
 `;
-const VoteList = styled("li")`
+const VoteContainer = styled("li")`
   padding: 10px;
   list-style-type: none;
   background: white;
@@ -41,7 +19,7 @@ const VoteList = styled("li")`
   cursor: pointer;
 `;
 
-export const VoteForm = () => {
+export const VoteList = () => {
   const [text, setText] = useState("");
   const [isPending, setIsPending] = useState(false);
 
@@ -90,9 +68,10 @@ export const VoteForm = () => {
   return (
     <div>
       <h2>Request a Tutorial</h2>
+      <button onClick={modal.open}>Open Vote Modal</button>
       <GapWrapper>
         {votes.map((vote) => (
-          <VoteList key={vote.id}>
+          <VoteContainer key={vote.id}>
             <p className="text">{vote.text}</p>
             <p>{vote.upvotes}</p>
             <div>
@@ -103,30 +82,33 @@ export const VoteForm = () => {
                 削除する
               </button>
             </div>
-          </VoteList>
+          </VoteContainer>
         ))}
       </GapWrapper>
-      <button onClick={modal.open}>Open Vote Modal</button>
-
-      {modal.isOpen && (
-        <Overlay>
-          <Modal>
-            <h2>Request a Tutorial</h2>
+      <BasicModal
+        title="Request a Tutorial"
+        open={modal.isOpen}
+        handleClose={modal.close}
+        contents={
+          <div>
+            {" "}
             <input
               type="text"
               name="request"
               placeholder="Request..."
               onChange={(e) => setText(e.target.value)}
             />
-            <div>
-              <button onClick={handleVotesCreate}>
-                {isPending ? "送信中..." : "送信"}
-              </button>
-              <button onClick={modal.close}>閉じる</button>
-            </div>
-          </Modal>
-        </Overlay>
-      )}
+          </div>
+        }
+        footer={
+          <div>
+            <button onClick={handleVotesCreate}>
+              {isPending ? "送信中..." : "送信"}
+            </button>
+            <button onClick={modal.close}>閉じる</button>
+          </div>
+        }
+      />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
+import { LiffProvider } from "../contexts/liff";
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -8,7 +9,9 @@ type AppProviderProps = {
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   return (
     <React.Suspense fallback={<div>loading...</div>}>
-      <BrowserRouter>{children}</BrowserRouter>
+      <LiffProvider>
+        <BrowserRouter>{children}</BrowserRouter>
+      </LiffProvider>
     </React.Suspense>
   );
 };

@@ -1,4 +1,4 @@
 export {
-  postSlackNotification,
+  slackNotification,
   VITE_SLACK_INCOMING_WEBHOOK,
-} from "./postSlackNotification";
+} from "./slackNotification";
