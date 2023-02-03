@@ -4,10 +4,22 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
+import { useLiff } from "../../../hooks";
 
 export const StripePaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const { liff } = useLiff();
+
+  const handleMessage = async (id: string) => {
+    if (!liff) return;
+    await liff.sendMessages([
+      {
+        type: "text",
+        text: `Your payment id: ${id}`,
+      },
+    ]);
+  };
 
   const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -16,7 +28,7 @@ export const StripePaymentForm = () => {
       elements,
       redirect: "if_required",
     });
-    console.log(result);
+    handleMessage(result.paymentIntent?.id ?? "");
   };
 
   return (

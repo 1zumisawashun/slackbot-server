@@ -1,6 +1,5 @@
 import { slackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "../../helpers";
-import { useFunctions } from "../../hooks";
-import { useLiff } from "../../contexts/liff";
+import { useFunctions, useLiff } from "../../hooks";
 
 export const Component = () => {
   const { onCallTemplate } = useFunctions();

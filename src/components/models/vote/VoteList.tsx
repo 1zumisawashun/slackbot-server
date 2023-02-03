@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 import { useDisclosure, useFunctions } from "../../../hooks";
 import { fetchVotes } from "../../../services";
-import { BasicModal } from "../../uis";
+import { BasicModal, InputText } from "../../uis";
 
 const GapWrapper = styled("ol")`
   display: grid;
@@ -98,11 +98,8 @@ export const VoteList = () => {
         handleClose={modal.close}
         contents={
           <div>
-            {" "}
-            <input
-              type="text"
-              name="request"
-              placeholder="Request..."
+            <InputText
+              placeholder="yo some text"
               onChange={(e) => setText(e.target.value)}
             />
           </div>
