@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { db } from "../../../libs/firebase";
+import { db, timestamp } from "../../../libs/firebase";
 
 export const onCreate = functions.https.onCall((data, context) => {
   if (!context.auth) {
@@ -18,5 +18,7 @@ export const onCreate = functions.https.onCall((data, context) => {
   return db.collection("votes").add({
     text: data.text,
     upvotes: 0,
+    createdAt: timestamp,
+    updatedAt: timestamp,
   });
 });

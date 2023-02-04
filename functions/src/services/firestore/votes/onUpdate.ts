@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { db, admin } from "../../../libs/firebase";
+import { db, admin, timestamp } from "../../../libs/firebase";
 
 export const onUpdate = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
@@ -28,5 +28,6 @@ export const onUpdate = functions.https.onCall(async (data, context) => {
 
   return votesRef.update({
     upvotes: admin.firestore.FieldValue.increment(1),
+    updatedAt: timestamp,
   });
 });

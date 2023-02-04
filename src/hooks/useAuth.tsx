@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signOut,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useEffect } from "react";
 
@@ -15,19 +16,33 @@ type Params = {
 export const useAuth = () => {
   const [uid, setUid] = useState<string>("");
 
+  const signup = useCallback(async (params: Params) => {
+    const { email, password } = params;
+    try {
+      await createUserWithEmailAndPassword(projectAuth, email, password);
+      location.href = "/";
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
+
   const login = useCallback(async (params: Params) => {
     const { email, password } = params;
-    const res = await createUserWithEmailAndPassword(
-      projectAuth,
-      email,
-      password
-    );
-    return res;
+    try {
+      await signInWithEmailAndPassword(projectAuth, email, password);
+      location.href = "/";
+    } catch (error) {
+      alert(error);
+    }
   }, []);
 
   const logout = useCallback(async () => {
-    const res = await signOut(projectAuth);
-    return res;
+    try {
+      await signOut(projectAuth);
+      location.href = "/";
+    } catch (error) {
+      alert(error);
+    }
   }, []);
 
   useEffect(() => {
@@ -36,5 +51,5 @@ export const useAuth = () => {
     });
   }, []);
 
-  return { uid, login, logout };
+  return { uid, signup, login, logout };
 };
