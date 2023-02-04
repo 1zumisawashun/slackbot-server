@@ -10,7 +10,7 @@ const ModalInner = styled("div")<{ size: string }>`
   border-radius: 10px;
   padding: 50px 0;
   position: relative;
-  width: ${({ size }) => {
+  max-width: ${({ size }) => {
     if (size === "small") return "600px";
     if (size === "medium") return "800px";
     if (size === "large") return "1200px";

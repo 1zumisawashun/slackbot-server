@@ -9,7 +9,7 @@ import { Button } from "../../uis";
 import { styled } from "@mui/material/styles";
 
 const Container = styled("div")`
-  padding: 20px;
+  padding: 20px 0;
 `;
 
 export const StripePaymentForm = () => {

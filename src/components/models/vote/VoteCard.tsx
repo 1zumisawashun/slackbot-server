@@ -5,21 +5,32 @@ import { Button } from "../../uis";
 import { BaseText } from "../../../themes";
 import { Vote } from "../../../types/Vote";
 
-const ButtonWrapper = styled("ol")`
-  display: flex;
-  gap: 10px;
+const CardContainer = styled("div")`
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  margin-top: 10px;
+  padding: 16px;
+  position: relative;
 `;
 
-const Card = styled("li")`
-  padding: 10px;
-  list-style-type: none;
-  background: white;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+const Title = styled("p")`
+  background-color: #f4f4f4;
+  font-size: 20px;
+  left: 16px;
+  padding: 0 8px;
+  position: absolute;
+  top: -16px;
+`;
+
+const CardInner = styled("div")`
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  cursor: pointer;
+  justify-content: space-between;
+`;
+
+const FlexGapWrapper = styled("div")`
+  display: flex;
+  gap: 10px;
 `;
 
 type Status = "completed" | "deleting" | "updating";
@@ -53,17 +64,23 @@ export const VoteCard: React.FC<VoteCardProps> = ({ vote }) => {
   };
 
   return (
-    <Card>
-      <BaseText>{vote.text}</BaseText>
-      <BaseText className="-orange -bold">{vote.upvotes}</BaseText>
-      <ButtonWrapper>
-        <Button onClick={() => handleVotesUpdate(vote.id)}>
-          {status === "updating" ? "投票中..." : "投票"}
-        </Button>
-        <Button onClick={() => handleVotesDelete(vote.id)}>
-          {status === "deleting" ? "削除中..." : "削除"}
-        </Button>
-      </ButtonWrapper>
-    </Card>
+    <CardContainer>
+      <Title>{vote.text}</Title>
+      <CardInner>
+        <FlexGapWrapper>
+          <BaseText>票数</BaseText>
+          <BaseText className="-orange -bold">{vote.upvotes}</BaseText>
+        </FlexGapWrapper>
+
+        <FlexGapWrapper>
+          <Button onClick={() => handleVotesUpdate(vote.id)}>
+            {status === "updating" ? "投票中..." : "投票"}
+          </Button>
+          <Button onClick={() => handleVotesDelete(vote.id)}>
+            {status === "deleting" ? "削除中..." : "削除"}
+          </Button>
+        </FlexGapWrapper>
+      </CardInner>
+    </CardContainer>
   );
 };

@@ -13,14 +13,14 @@ const CardContainer = styled(Link)`
 const ContentWrapper = styled("div")`
   align-content: space-between;
   display: grid;
-  height: 90px;
+  height: 80px;
   padding: 10px;
 `;
 
 const styledImage = css`
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 10px 10px 0 0;
-  height: 120px;
+  height: 100px;
   margin-bottom: -10px;
   object-fit: cover;
   width: 100%;

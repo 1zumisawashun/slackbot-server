@@ -12,6 +12,7 @@ const GridWrapper = styled("div")`
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 20px;
+  padding: 20px 0;
 `;
 const ProductCardWrapper = styled("div")`
   width: 90%;

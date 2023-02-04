@@ -27,6 +27,10 @@ const FormContainer = styled.form`
   padding: 0 30px;
 `;
 
+const Title = styled("h1")`
+  font-size: 20px;
+`;
+
 type AuthFormProps = {
   type: "signup" | "login";
 };
@@ -49,24 +53,20 @@ export const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
   return (
     <Wrapper>
       <Content>
-        <h1>{title}</h1>
+        <Title>{title}</Title>
         <FormContainer onSubmit={handleSubmit}>
-          <div>
-            <InputText
-              type="text"
-              value={email}
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <InputText
-              type="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <InputText
+            type="text"
+            value={email}
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <InputText
+            type="password"
+            value={password}
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <Button type="submit">{button}</Button>
         </FormContainer>
       </Content>

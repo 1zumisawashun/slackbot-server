@@ -3,16 +3,21 @@ import { slackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "../../helpers";
 import { useFunctions, useLiff } from "../../hooks";
 import { Button } from "../uis";
 
-const ComponentContainer = styled("div")<{ background?: string }>`
+const GapWrapper = styled("div")`
+  display: grid;
+  gap: 20px;
+  padding: 20px 0;
+`;
+
+const ComponentContainer = styled("div")`
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 4px;
-  margin-top: 40px;
+  margin-top: 10px;
   padding: 16px;
-  padding-bottom: 8px;
   position: relative;
 `;
 
-const ComponentTitle = styled("p")`
+const Title = styled("p")`
   background-color: #f4f4f4;
   font-size: 20px;
   left: 16px;
@@ -70,21 +75,21 @@ export const Component = () => {
   };
 
   return (
-    <div>
+    <GapWrapper>
       <ComponentContainer>
-        <ComponentTitle>Slack Notification</ComponentTitle>
+        <Title>Slack Notification</Title>
         <Button onClick={handleSlack}>Slack Notification</Button>
       </ComponentContainer>
 
       <ComponentContainer>
-        <ComponentTitle>Test</ComponentTitle>
+        <Title>Test</Title>
         <Button onClick={handleTest}>Test</Button>
       </ComponentContainer>
 
       <ComponentContainer>
-        <ComponentTitle>Post Liff</ComponentTitle>
+        <Title>Post Liff</Title>
         <Button onClick={postLiff}>Post Liff</Button>
       </ComponentContainer>
-    </div>
+    </GapWrapper>
   );
 };

@@ -5,9 +5,10 @@ import { fetchVotes } from "../../services";
 import { BasicModal, InputText, Button } from "../uis";
 import { VoteCard } from "../models";
 
-const GapWrapper = styled("ol")`
+const GapWrapper = styled("div")`
   display: grid;
   gap: 20px;
+  padding: 20px 0;
 `;
 const ButtonWrapper = styled("div")`
   display: flex;
@@ -44,17 +45,17 @@ export const Vote = () => {
   };
 
   return (
-    <div>
+    <>
       <GapWrapper>
         {votes.map((vote) => (
           <VoteCard key={vote.id} vote={vote} />
         ))}
       </GapWrapper>
 
-      <Button onClick={modal.open}>投票を追加</Button>
+      <Button onClick={modal.open}>投票を追加する</Button>
 
       <BasicModal
-        title="Request a Tutorial"
+        title="投票を追加する"
         open={modal.isOpen}
         handleClose={modal.close}
         contents={
@@ -74,6 +75,6 @@ export const Vote = () => {
           </ButtonWrapper>
         }
       />
-    </div>
+    </>
   );
 };
