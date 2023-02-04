@@ -163,12 +163,11 @@ body {
   max-width: 560px;
   height: 100%;
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 1.1em;
+  font-size: 14px;
   font-weight: normal;
   line-height: 1.6;
   margin: 0 auto;
   color: #213547;
-  background-color: #f7f7f7;
   -webkit-font-smoothing: antialiased;
   word-wrap: break-word;
   overflow-wrap: break-word;

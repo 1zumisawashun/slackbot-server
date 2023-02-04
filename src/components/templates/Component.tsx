@@ -3,10 +3,6 @@ import { slackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "../../helpers";
 import { useFunctions, useLiff } from "../../hooks";
 import { Button } from "../uis";
 
-const FormContainer = styled("div")`
-  padding-bottom: 40px;
-`;
-
 const ComponentContainer = styled("div")<{ background?: string }>`
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 4px;
@@ -15,18 +11,10 @@ const ComponentContainer = styled("div")<{ background?: string }>`
   padding-bottom: 8px;
   position: relative;
 `;
-const ComponentFlex = styled("div")`
-  display: flex;
-  gap: 10px;
-`;
-const ComponentGap = styled("div")`
-  display: grid;
-  gap: 10px;
-`;
+
 const ComponentTitle = styled("p")`
   background-color: #f4f4f4;
   font-size: 20px;
-  font-weight: bold;
   left: 16px;
   padding: 0 8px;
   position: absolute;
@@ -82,9 +70,9 @@ export const Component = () => {
   };
 
   return (
-    <FormContainer>
+    <div>
       <ComponentContainer>
-        <ComponentTitle>Error</ComponentTitle>
+        <ComponentTitle>Slack Notification</ComponentTitle>
         <Button onClick={handleSlack}>Slack Notification</Button>
       </ComponentContainer>
 
@@ -94,9 +82,9 @@ export const Component = () => {
       </ComponentContainer>
 
       <ComponentContainer>
-        <ComponentTitle>postLiff</ComponentTitle>
-        <Button onClick={postLiff}>postLiff</Button>
+        <ComponentTitle>Post Liff</ComponentTitle>
+        <Button onClick={postLiff}>Post Liff</Button>
       </ComponentContainer>
-    </FormContainer>
+    </div>
   );
 };

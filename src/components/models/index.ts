@@ -2,7 +2,7 @@
 export { StripePaymentForm } from "./checkout/StripePaymentForm";
 
 // vote
-export { VoteList } from "./vote/VoteList";
+export { VoteCard } from "./vote/VoteCard";
 
 // product
 export { ProductCard } from "./product/ProductCard";

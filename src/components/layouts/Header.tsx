@@ -1,21 +1,49 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks";
-import { Button } from "../uis";
+import { styled, Theme } from "@mui/material/styles";
+import { AppBar, Toolbar } from "@mui/material";
+import { css } from "@emotion/css";
+import { Link } from "react-router-dom";
+import logo from "../../assets/logo.jpg";
 
-export const Header = () => {
-  const { uid, logout } = useAuth();
-  const navigate = useNavigate();
+const CustomAppbar = styled(AppBar)<{ theme?: Theme }>`
+  background: white;
+  z-index: ${({ theme }) => theme.zIndex.drawer + 2};
+`;
+const CustomToolbar = styled(Toolbar)`
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  @media all {
+    min-height: 60px;
+  }
+`;
+const LinkWrapper = styled("div")`
+  display: flex;
+  gap: 10px;
+`;
+
+const styledIcon = css`
+  height: 40px;
+  width: 40px;
+`;
+
+export const Header: React.FC = () => {
   return (
-    <div className="App">
-      {uid ? (
-        <Button onClick={logout}>Logout</Button>
-      ) : (
-        <Button onClick={() => navigate("/login")}>Login</Button>
-      )}
-      <Button onClick={() => navigate("/checkout")}>Checkout</Button>
-      <Button onClick={() => navigate("/component")}>Component</Button>
-      <Button onClick={() => navigate("/")}>Top</Button>
-      <Button onClick={() => navigate("/vote")}>Vote</Button>
-    </div>
+    <CustomAppbar position="fixed">
+      <CustomToolbar>
+        <div>
+          <Link to="/">
+            <img src={logo} alt="" className={styledIcon} />
+          </Link>
+        </div>
+
+        <LinkWrapper>
+          <Link to="/vote">Vote</Link>
+          <Link to="/checkout">Checkout</Link>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Signup</Link>
+          <Link to="/component">Component</Link>
+        </LinkWrapper>
+      </CustomToolbar>
+    </CustomAppbar>
   );
 };

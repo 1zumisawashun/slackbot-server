@@ -13,7 +13,7 @@ const CardContainer = styled(Link)`
 const ContentWrapper = styled("div")`
   align-content: space-between;
   display: grid;
-  height: 110px;
+  height: 90px;
   padding: 10px;
 `;
 

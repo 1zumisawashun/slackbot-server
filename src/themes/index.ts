@@ -4,3 +4,4 @@ export {
   DottedThreeLine,
   DottedTwoLine,
 } from "./BaseDottedLine";
+export { BaseBox } from "./BaseBox";
