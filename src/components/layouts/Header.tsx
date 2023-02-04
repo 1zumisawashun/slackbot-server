@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks";
+import { Button } from "../uis";
 
 export const Header = () => {
   const { uid, logout } = useAuth();
@@ -7,14 +8,14 @@ export const Header = () => {
   return (
     <div className="App">
       {uid ? (
-        <button onClick={logout}>Logout</button>
+        <Button onClick={logout}>Logout</Button>
       ) : (
-        <button onClick={() => navigate("/login")}>Login</button>
+        <Button onClick={() => navigate("/login")}>Login</Button>
       )}
-      <button onClick={() => navigate("/checkout")}>Checkout</button>
-      <button onClick={() => navigate("/component")}>Component</button>
-      <button onClick={() => navigate("/")}>Top</button>
-      <button onClick={() => navigate("/vote")}>Vote</button>
+      <Button onClick={() => navigate("/checkout")}>Checkout</Button>
+      <Button onClick={() => navigate("/component")}>Component</Button>
+      <Button onClick={() => navigate("/")}>Top</Button>
+      <Button onClick={() => navigate("/vote")}>Vote</Button>
     </div>
   );
 };

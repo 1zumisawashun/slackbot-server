@@ -5,6 +5,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { useLiff } from "../../../hooks";
+import { Button } from "../../uis";
 
 export const StripePaymentForm = () => {
   const stripe = useStripe();
@@ -34,7 +35,7 @@ export const StripePaymentForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <button type="submit">Buy</button>
+      <Button type="submit">Buy</Button>
     </form>
   );
 };

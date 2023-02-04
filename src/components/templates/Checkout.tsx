@@ -3,6 +3,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { StripePaymentForm } from "../models";
 import stripe from "../../libs/stripe";
 import { useFunctions } from "../../hooks";
+import { Button } from "../uis";
 
 export const Checkout = () => {
   const [paymentIntentClientSecret, setPIClientSecret] = useState("");
@@ -35,10 +36,10 @@ export const Checkout = () => {
 
   return (
     <div className="App">
-      <button onClick={handleStripeCheckoutSessionsCreate}>
+      <Button onClick={handleStripeCheckoutSessionsCreate}>
         Stripe Sessions
-      </button>
-      <button onClick={handleStripeProductsCreate}>Stripe Products</button>
+      </Button>
+      <Button onClick={handleStripeProductsCreate}>Stripe Products</Button>
       {paymentIntentClientSecret ? (
         <Elements
           stripe={stripe()}

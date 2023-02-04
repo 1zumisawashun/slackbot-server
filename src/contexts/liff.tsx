@@ -4,7 +4,6 @@ import { LiffMockPlugin } from "@line/liff-mock";
 import LIFFInspectorPlugin from "@line/liff-inspector";
 import { ExtendedInit, LiffMockApi } from "@line/liff-mock";
 import { getLiffEnv } from "../helpers";
-import { useAuth } from "../hooks/useAuth";
 
 declare module "@line/liff" {
   interface Liff {
@@ -31,19 +30,14 @@ export const LiffProvider = ({ children }: { children?: ReactNode }) => {
   const [liffClient, setLiffClient] = useState<typeof liff | undefined>(
     undefined
   );
-  const { uid } = useAuth();
   const { liffId, mock } = getLiffEnv();
 
   useEffect(() => {
     (async () => {
       await liff.init({ liffId, mock });
 
-      if (liff.isLoggedIn()) {
-        const context = liff.getContext();
-        const uid = context?.userId;
-        window.location.replace(`${location.href}/?uid=${uid}`);
-      } else {
-        liff.login({ redirectUri: `${location.href}/?uid=${uid}` });
+      if (!liff.isLoggedIn()) {
+        liff.login();
       }
 
       setLiffClient(liff);

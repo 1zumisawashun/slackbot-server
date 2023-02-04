@@ -8,6 +8,7 @@ type UseLiff = {
   initialized: boolean;
   isInClient: boolean;
   loggedIn: boolean;
+  userId?: string;
   closeWindow?: () => void;
   isExpire: () => boolean;
   login?: () => void;
@@ -38,6 +39,7 @@ export const useLiff = (): UseLiff => {
     initialized: true,
     isInClient: liff.isInClient(),
     loggedIn: liff.isLoggedIn(),
+    userId: liff.getContext()?.userId,
     closeWindow: liff.closeWindow,
     isExpire: isExpire,
     login: liff.login,

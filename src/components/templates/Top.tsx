@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useAuth, useLiff } from "../../hooks";
 import { ProductCard } from "../models";
+import { DottedOneLine } from "../../themes";
 import PRODUCTS from "../../constants/products.json";
 
 const GridWrapper = styled("div")`
@@ -11,7 +12,7 @@ const GridWrapper = styled("div")`
 `;
 
 const ProductCardWrapper = styled("div")`
-  width: 250px;
+  width: 90%;
   margin: auto;
 `;
 
@@ -19,7 +20,7 @@ export const Top = () => {
   const [username, setUsername] = useState("");
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
-  const { liff } = useLiff();
+  const { liff, userId } = useLiff();
   const { uid } = useAuth();
 
   const asyncLiffFunc = async () => {
@@ -36,9 +37,10 @@ export const Top = () => {
 
   return (
     <div className="App">
-      <h1>Hello World {username}</h1>
-      <p>assessToken:{accessToken}</p>
-      <p>uid:{uid}</p>
+      <DottedOneLine>Hello World {username}</DottedOneLine>
+      <DottedOneLine>assessToken:{accessToken}</DottedOneLine>
+      <DottedOneLine>uid:{uid}</DottedOneLine>
+      <DottedOneLine>line uid:{userId}</DottedOneLine>
       <GridWrapper>
         {PRODUCTS.map((product) => (
           <ProductCardWrapper key={product.id}>

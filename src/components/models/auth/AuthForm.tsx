@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useState, BaseSyntheticEvent } from "react";
 import { useAuth } from "../../../hooks";
-import { InputText } from "../../uis";
+import { InputText, Button } from "../../uis";
 
 const Wrapper = styled.div`
   background-color: #fff;
@@ -24,22 +24,6 @@ const FormContainer = styled.form`
   display: grid;
   gap: 1rem;
   width: 50%;
-`;
-
-const LoginButton = styled.button`
-  border: none;
-  padding: 1rem;
-  width: 100%;
-  border-radius: 8px;
-  background-color: #1f4b99;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.4s ease-in;
-  &:hover {
-    transform: translateY(-3px) scale(1.05);
-  }
 `;
 
 type AuthFormProps = {
@@ -82,7 +66,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <LoginButton type="submit">{button}</LoginButton>
+          <Button type="submit">{button}</Button>
         </FormContainer>
       </Content>
     </Wrapper>

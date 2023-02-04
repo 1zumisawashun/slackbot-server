@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
  */
 export const BaseText = styled("p")`
   color: #4a4a4a;
-  font-size: 16px;
+  font-size: 14px;
   white-space: pre-line;
   word-break: break-all;
   a {

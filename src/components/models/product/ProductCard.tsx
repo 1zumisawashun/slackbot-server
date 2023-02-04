@@ -20,7 +20,7 @@ const ContentWrapper = styled("div")`
 const styledImage = css`
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 10px 10px 0 0;
-  height: 170px;
+  height: 150px;
   margin-bottom: -10px;
   object-fit: cover;
   width: 100%;
@@ -47,7 +47,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <img src={image} className={styledImage} />
       </div>
       <ContentWrapper>
-        <DottedTwoLine className="-bold">{name}</DottedTwoLine>
+        <DottedTwoLine>{name}</DottedTwoLine>
         <div>
           <BaseText className="-orange -inline -bold">¥{price}</BaseText>
           <BaseText className="-inline">（税込）</BaseText>
