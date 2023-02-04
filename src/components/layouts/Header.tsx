@@ -3,6 +3,7 @@ import { AppBar, Toolbar } from "@mui/material";
 import { css } from "@emotion/css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.jpg";
+import { useAuth } from "../../hooks";
 
 const CustomAppbar = styled(AppBar)<{ theme?: Theme }>`
   background: white;
@@ -27,6 +28,7 @@ const styledIcon = css`
 `;
 
 export const Header: React.FC = () => {
+  const { uid, logout } = useAuth();
   return (
     <CustomAppbar position="fixed">
       <CustomToolbar>
@@ -39,8 +41,14 @@ export const Header: React.FC = () => {
         <LinkWrapper>
           <Link to="/vote">Vote</Link>
           <Link to="/checkout">Checkout</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Signup</Link>
+          {uid ? (
+            <span onClick={logout}>logout</span>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Signup</Link>
+            </>
+          )}
           <Link to="/component">Component</Link>
         </LinkWrapper>
       </CustomToolbar>

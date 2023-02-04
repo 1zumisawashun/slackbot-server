@@ -22,8 +22,9 @@ const Content = styled.div`
 
 const FormContainer = styled.form`
   display: grid;
-  gap: 1rem;
-  width: 50%;
+  gap: 20px;
+  width: 100%;
+  padding: 0 30px;
 `;
 
 type AuthFormProps = {

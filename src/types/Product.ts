@@ -1,18 +1,14 @@
 export type Product = {
-  amount: number;
-  client_id: number;
+  client_id: string;
   client_name: string;
   description: string;
   id: string;
-  images: Image[];
+  images: {
+    title: string;
+    url: string;
+  }[];
   name: string;
-  options: unknown[];
+  options: any[];
   price_jpy: number; // 税込価格
   stock_quantity: number;
-  url: string;
-};
-
-type Image = {
-  title: string;
-  url: string;
 };

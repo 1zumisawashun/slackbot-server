@@ -58,10 +58,10 @@ export const VoteCard: React.FC<VoteCardProps> = ({ vote }) => {
       <BaseText className="-orange -bold">{vote.upvotes}</BaseText>
       <ButtonWrapper>
         <Button onClick={() => handleVotesUpdate(vote.id)}>
-          {status === "updating" ? "投票中..." : "投票する"}
+          {status === "updating" ? "投票中..." : "投票"}
         </Button>
         <Button onClick={() => handleVotesDelete(vote.id)}>
-          {status === "deleting" ? "削除中..." : "削除する"}
+          {status === "deleting" ? "削除中..." : "削除"}
         </Button>
       </ButtonWrapper>
     </Card>

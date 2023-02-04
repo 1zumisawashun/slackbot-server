@@ -7,12 +7,16 @@ import { VoteCard } from "../models";
 
 const GapWrapper = styled("ol")`
   display: grid;
-  padding: 20px;
   gap: 20px;
 `;
-const ButtonWrapper = styled("ol")`
+const ButtonWrapper = styled("div")`
   display: flex;
   gap: 10px;
+`;
+const FormWrapper = styled("div")`
+  display: grid;
+  gap: 20px;
+  width: 100%;
 `;
 
 export const Vote = () => {
@@ -47,17 +51,19 @@ export const Vote = () => {
         ))}
       </GapWrapper>
 
-      <Button onClick={modal.open}>Open Vote Modal</Button>
+      <Button onClick={modal.open}>投票を追加</Button>
 
       <BasicModal
         title="Request a Tutorial"
         open={modal.isOpen}
         handleClose={modal.close}
         contents={
-          <InputText
-            placeholder="yo some text"
-            onChange={(e) => setText(e.target.value)}
-          />
+          <FormWrapper>
+            <InputText
+              placeholder="yo some text"
+              onChange={(e) => setText(e.target.value)}
+            />
+          </FormWrapper>
         }
         footer={
           <ButtonWrapper>

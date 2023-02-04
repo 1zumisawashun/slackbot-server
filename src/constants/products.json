@@ -1,10 +1,9 @@
 [
   {
-    "amount": 1,
-    "client_id": 21,
+    "client_id": "21",
     "client_name": "WISE SONS TOKYO",
     "description": "カレーエッグサラダ＆コンビーフカレーエッグサラダ＆コンビーフ",
-    "id": 21,
+    "id": "21",
     "images": [
       {
         "url": "https://placehold.jp/200x200.png",
@@ -14,15 +13,13 @@
     "name": "カレーエッグサラダ＆コンビーフカレーエッグサラダ＆コンビーフ",
     "options": [],
     "price_jpy": 985,
-    "stock_quantity": 10,
-    "url": "https://placehold.jp/200x200.png"
+    "stock_quantity": 10
   },
   {
-    "amount": 2,
-    "client_id": 21,
+    "client_id": "21",
     "client_name": "WISE SONS TOKYO",
     "description": "カレーエッグサラダ＆コンビーフ",
-    "id": 22,
+    "id": "22",
     "images": [
       {
         "url": "https://placehold.jp/200x200.png",
@@ -32,15 +29,13 @@
     "name": "カレーエッグサラダ＆コンビーフ",
     "options": [],
     "price_jpy": 1985,
-    "stock_quantity": 10,
-    "url": "https://placehold.jp/200x200.png"
+    "stock_quantity": 10
   },
   {
-    "amount": 1,
-    "client_id": 22,
+    "client_id": "22",
     "client_name": "WISE SONS TOKYO SECOND",
     "description": "ラーメン＆チャーハン",
-    "id": 23,
+    "id": "23",
     "images": [
       {
         "url": "https://placehold.jp/200x200.png",
@@ -50,15 +45,13 @@
     "name": "ラーメン＆チャーハン",
     "options": [],
     "price_jpy": 1085,
-    "stock_quantity": 10,
-    "url": "https://placehold.jp/200x200.png"
+    "stock_quantity": 10
   },
   {
-    "amount": 1,
-    "client_id": 23,
+    "client_id": "23",
     "client_name": "WISE SONS TOKYO THIRD",
     "description": "ラーメン＆チャーハン&餃子セット",
-    "id": 24,
+    "id": "24",
     "images": [
       {
         "url": "https://placehold.jp/200x200.png",
@@ -68,7 +61,6 @@
     "name": "ラーメン＆チャーハン&餃子セット",
     "options": [],
     "price_jpy": 1280,
-    "stock_quantity": 10,
-    "url": "https://placehold.jp/200x200.png"
+    "stock_quantity": 10
   }
 ]

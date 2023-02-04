@@ -1,27 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, BaseSyntheticEvent } from "react";
 import styled from "@emotion/styled";
-import { useAuth, useLiff } from "../../hooks";
+import { useAuth, useLiff, useDisclosure } from "../../hooks";
 import { ProductCard } from "../models";
 import { DottedOneLine } from "../../themes";
 import PRODUCTS from "../../constants/products.json";
+import { BasicModal, InputText, Button } from "../uis";
+import { Product } from "../../types/Product";
+import { createProducts, fetchProducts } from "../../services";
 
 const GridWrapper = styled("div")`
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 20px;
 `;
-
 const ProductCardWrapper = styled("div")`
   width: 90%;
   margin: auto;
 `;
+const ButtonWrapper = styled("div")`
+  display: flex;
+  gap: 10px;
+`;
+const FormWrapper = styled("div")`
+  display: grid;
+  gap: 20px;
+  width: 100%;
+`;
+
+const initProduct = PRODUCTS[0];
 
 export const Top = () => {
   const [username, setUsername] = useState("");
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState(false);
+  const [product, setProduct] = useState<Product>(initProduct);
+
+  const modal = useDisclosure();
 
   const { liff, userId } = useLiff();
   const { uid } = useAuth();
+  const { products } = fetchProducts();
 
   const asyncLiffFunc = async () => {
     if (!liff) return;
@@ -35,6 +53,39 @@ export const Top = () => {
     asyncLiffFunc();
   }, [liff]);
 
+  const handleChange = (e: BaseSyntheticEvent) => {
+    const { name, value } = e.target;
+    setProduct((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleProductsCreate = async () => {
+    const params = {
+      ...product,
+      client_id: "1",
+      client_name: "cafelog",
+      images: [
+        {
+          title: product.name,
+          url: "https://placehold.jp/200x200.png",
+        },
+      ],
+      options: [],
+    };
+    setIsPending(true);
+    try {
+      await createProducts(params);
+      setIsPending(false);
+      modal.close();
+    } catch (error) {
+      setIsPending(false);
+      modal.close();
+      alert(error);
+    }
+  };
+
   return (
     <div className="App">
       <DottedOneLine>Hello World {username}</DottedOneLine>
@@ -42,7 +93,7 @@ export const Top = () => {
       <DottedOneLine>uid:{uid}</DottedOneLine>
       <DottedOneLine>line uid:{userId}</DottedOneLine>
       <GridWrapper>
-        {PRODUCTS.map((product) => (
+        {products.map((product) => (
           <ProductCardWrapper key={product.id}>
             <ProductCard
               id={`${product.id}`}
@@ -54,6 +105,52 @@ export const Top = () => {
           </ProductCardWrapper>
         ))}
       </GridWrapper>
+
+      <Button onClick={modal.open}>商品を追加する</Button>
+
+      <BasicModal
+        title="商品を追加する"
+        open={modal.isOpen}
+        handleClose={modal.close}
+        contents={
+          <FormWrapper>
+            <InputText
+              name="name"
+              label="product.name"
+              placeholder="yo some text"
+              onChange={handleChange}
+            />
+            <InputText
+              name="price_jpy"
+              type="number"
+              label="product.price_jpy"
+              placeholder="yo some text"
+              onChange={handleChange}
+            />
+            <InputText
+              name="stock_quantity"
+              type="number"
+              label="product.stock_quantity"
+              placeholder="yo some text"
+              onChange={handleChange}
+            />
+            <InputText
+              name="description"
+              label="product.description"
+              placeholder="yo some text"
+              onChange={handleChange}
+            />
+          </FormWrapper>
+        }
+        footer={
+          <ButtonWrapper>
+            <Button onClick={handleProductsCreate}>
+              {isPending ? "送信中..." : "送信"}
+            </Button>
+            <Button onClick={modal.close}>閉じる</Button>
+          </ButtonWrapper>
+        }
+      />
     </div>
   );
 };
