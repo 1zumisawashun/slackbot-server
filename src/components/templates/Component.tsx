@@ -27,7 +27,8 @@ const Title = styled("p")`
 `;
 
 export const Component = () => {
-  const { onCallTemplate } = useFunctions();
+  const { onCallTemplate, stripeCheckoutSessionsCreate, stripeProductsCreate } =
+    useFunctions();
   const { liff, isInClient, closeWindow } = useLiff();
 
   const handleSlack = () => {
@@ -74,6 +75,16 @@ export const Component = () => {
     }
   };
 
+  const handleStripeCheckoutSessionsCreate = async () => {
+    const res = await stripeCheckoutSessionsCreate();
+    alert(res);
+  };
+
+  const handleStripeProductsCreate = async () => {
+    const res = await stripeProductsCreate();
+    alert(res);
+  };
+
   return (
     <GapWrapper>
       <ComponentContainer>
@@ -89,6 +100,20 @@ export const Component = () => {
       <ComponentContainer>
         <Title>Post Liff</Title>
         <Button onClick={postLiff}>Post Liff</Button>
+      </ComponentContainer>
+
+      <ComponentContainer>
+        <Title>Stripe Checkout Sessions Create</Title>
+        <Button onClick={handleStripeCheckoutSessionsCreate}>
+          Stripe Checkout Sessions Create
+        </Button>
+      </ComponentContainer>
+
+      <ComponentContainer>
+        <Title>Stripe Products Create</Title>
+        <Button onClick={handleStripeProductsCreate}>
+          Stripe Products Create
+        </Button>
       </ComponentContainer>
     </GapWrapper>
   );

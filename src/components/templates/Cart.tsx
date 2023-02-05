@@ -17,7 +17,7 @@ export const Cart = () => {
   return (
     <GapWrapper>
       <CartList products={cart} />
-      <Button onClick={() => navigate("/checkout")}>購入する</Button>
+      <Button onClick={() => navigate("/checkout")}>決済画面に進む</Button>
     </GapWrapper>
   );
 };

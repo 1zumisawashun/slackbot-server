@@ -42,7 +42,7 @@ export const StripePaymentForm = () => {
       <Container>
         <PaymentElement />
       </Container>
-      <Button type="submit">Buy</Button>
+      <Button type="submit">購入する</Button>
     </form>
   );
 };
