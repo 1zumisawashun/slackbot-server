@@ -4,7 +4,7 @@ import { useFunctions } from "../../hooks";
 import { useLocation } from "react-router-dom";
 import { projectAuth } from "../../libs/firebase";
 import { signInWithCustomToken } from "firebase/auth";
-import { DottedOneLine } from "../../themes";
+import { BaseText } from "../../themes";
 
 export const Login = () => {
   const [lineLoginURL, setLineLoginURL] = useState<string>();
@@ -20,15 +20,16 @@ export const Login = () => {
   const getLineLoginURL = async () => {
     // stateを生成＆取得
     const state: any = await firestoreStatesCreate();
+    console.log(state, "state");
     const url = new URL("https://access.line.me/oauth2/v2.1/authorize");
 
     url.search = new URLSearchParams({
       response_type: "code", // 固定でcodeとする
-      client_id: import.meta.env.LINE_LOGIN_CHANNEL_ID, // チャネルのクライアントID
-      state, // stateを設定
+      client_id: "1657869139", // チャネルのクライアントID
+      state: state.data, // stateを設定
       scope: "profile openid email", // LINEから取得する情報
       bot_prompt: "aggressive", // ログイン時にBOTと連携させたい場合
-      redirect_uri: "https://slackbot-server-db4d4.web.app/login",
+      redirect_uri: "https://slackbot-server-db4d4.web.app",
     }).toString();
 
     setLineLoginURL(url.href);
@@ -50,7 +51,8 @@ export const Login = () => {
 
   return (
     <>
-      <DottedOneLine>{lineLoginURL}</DottedOneLine>
+      <BaseText>client_id: {import.meta.env.LINE_LOGIN_CHANNEL_ID}</BaseText>
+      <BaseText>line_login_url: {lineLoginURL}</BaseText>
       <a href={lineLoginURL} target="_blank" rel="noopenner">
         LINEでログイン
       </a>
