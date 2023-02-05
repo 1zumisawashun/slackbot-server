@@ -9,3 +9,5 @@ export const STRIPE_PAYMENTINTENT_CREATE =
 export const FIRESTORE_VOTES_CREATE = "services-firestore-votes-onCreate";
 export const FIRESTORE_VOTES_UPDATE = "services-firestore-votes-onUpdate";
 export const FIRESTORE_VOTES_DELETE = "services-firestore-votes-onDelete";
+
+export const FIRESTORE_STATES_CREATE = "services-firestore-states-onCreate";

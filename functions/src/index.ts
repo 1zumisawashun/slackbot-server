@@ -9,6 +9,9 @@ export { services };
 import * as webhooks from "./webhooks";
 export { webhooks };
 
+export { getCustomToken } from "./helpers/getCustomToken";
+export { getLineCodeWebhook } from "./helpers/getLineCodeWebhook";
+
 export const webhook = functions.https.onRequest(
   (request: functions.https.Request, response: any) => {
     const event = request.body;

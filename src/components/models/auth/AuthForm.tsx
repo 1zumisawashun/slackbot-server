@@ -5,24 +5,21 @@ import { InputText, Button } from "../../uis";
 
 const Wrapper = styled("div")`
   background-color: white;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 10px 20px 30px rgba(0, 0, 0, 0.15);
-  padding: 5rem 0;
+  padding: 50px 0;
 `;
-
 const Content = styled("div")`
   display: grid;
-  gap: 1rem;
+  gap: 20px;
   justify-items: center;
 `;
-
 const FormContainer = styled("form")`
   display: grid;
   gap: 20px;
   width: 100%;
   padding: 0 30px;
 `;
-
 const Title = styled("h1")`
   font-size: 20px;
 `;
@@ -30,6 +27,7 @@ const Title = styled("h1")`
 type AuthFormProps = {
   type: "signup" | "login";
 };
+
 export const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
   const { login, signup } = useAuth();
 

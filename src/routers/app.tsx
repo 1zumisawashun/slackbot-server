@@ -29,28 +29,8 @@ export const publicRoutes = [
     element: <Signup />,
   },
   {
-    path: "/cart",
-    element: <Cart />,
-  },
-  {
-    path: "/checkout",
-    element: <Checkout />,
-  },
-  {
-    path: "/product/:id",
-    element: <Product />,
-  },
-  {
-    path: "/vote",
-    element: <Vote />,
-  },
-  {
-    path: "/component",
-    element: <Component />,
-  },
-  {
     path: "*",
-    element: <Error />,
+    element: <Login />,
   },
 ];
 
@@ -60,14 +40,6 @@ export const protectedRoutes = [
     element: <Top />,
   },
   {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
-  },
-  {
     path: "/cart",
     element: <Cart />,
   },
@@ -84,18 +56,23 @@ export const protectedRoutes = [
     element: <Vote />,
   },
   {
-    path: "/component",
-    element: <Component />,
-  },
-  {
     path: "*",
     element: <Error />,
   },
 ];
 
+export const componentRoutes = [
+  {
+    path: "/component",
+    element: <Component />,
+  },
+];
+
 export const AppRoute: React.FC = () => {
   const { uid } = useAuth();
-  const route = uid ? [...protectedRoutes] : [...publicRoutes];
+  const route = uid
+    ? [...protectedRoutes, ...componentRoutes]
+    : [...publicRoutes];
   const element = useRoutes(route);
   return <>{element}</>;
 };

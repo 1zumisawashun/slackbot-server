@@ -3,6 +3,7 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 
 const db = admin.firestore();
+const auth = admin.auth();
 const timestamp = admin.firestore.FieldValue.serverTimestamp();
 
-export { admin, db, timestamp };
+export { admin, db, auth, timestamp };

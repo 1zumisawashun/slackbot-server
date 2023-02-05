@@ -11,14 +11,14 @@ const FlexWrapper = styled("div")`
   display: flex;
 `;
 const ContentWrapper = styled("div")`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 5px 15px;
-`;
-const Content = styled("div")`
   align-content: space-between;
   display: grid;
+  padding: 5px 15px;
+  width: 100%;
+`;
+const Content = styled("div")`
+  display: flex;
+  justify-content: space-between;
 `;
 const styledImage = css`
   border-radius: 10px;
@@ -41,7 +41,11 @@ export const CartList: React.FC<CartListProps> = ({ products }) => {
         products.map((product) => (
           <FlexWrapper key={product.id}>
             <Link to={`/products/${product.id}`}>
-              <img src={product.images[0].url} className={styledImage} />
+              <img
+                src={product.images[0].url}
+                alt={product.images[0].title}
+                className={styledImage}
+              />
             </Link>
 
             <ContentWrapper>
@@ -54,14 +58,14 @@ export const CartList: React.FC<CartListProps> = ({ products }) => {
                   <BaseText className="-inline">（税込）</BaseText>
                 </div>
 
-                <CartCounter amount={product.amount} productId={product.id} />
+                <div>
+                  <ButtonIconDelete
+                    onClick={() => removeProductFromCart(product.id)}
+                  />
+                </div>
               </Content>
 
-              <div>
-                <ButtonIconDelete
-                  onClick={() => removeProductFromCart(product.id)}
-                />
-              </div>
+              <CartCounter amount={product.amount} productId={product.id} />
             </ContentWrapper>
           </FlexWrapper>
         ))}

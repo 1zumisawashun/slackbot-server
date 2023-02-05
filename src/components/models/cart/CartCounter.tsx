@@ -4,7 +4,7 @@ import { InputText, ButtonIconRemove, ButtonIconAdd } from "../../uis";
 
 const CounterWrapper = styled("div")`
   display: flex;
-  gap: 10px;
+  gap: 5px;
   align-items: center;
 `;
 
