@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { StripePaymentForm } from "../models";
 import stripe from "../../libs/stripe";
-import { useFunctions } from "../../hooks";
+import { useFunctions, useCart } from "../../hooks";
 import { Button } from "../uis";
 
 export const Checkout = () => {

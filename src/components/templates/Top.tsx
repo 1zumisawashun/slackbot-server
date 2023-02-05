@@ -3,9 +3,8 @@ import styled from "@emotion/styled";
 import { useAuth, useLiff, useDisclosure } from "../../hooks";
 import { ProductCard } from "../models";
 import { DottedOneLine } from "../../themes";
-import PRODUCTS from "../../constants/products.json";
 import { BasicModal, InputText, Button } from "../uis";
-import { Product } from "../../types/Product";
+import { Product, initProduct } from "../../types/Product";
 import { createProducts, fetchProducts } from "../../services";
 
 const GridWrapper = styled("div")`
@@ -27,8 +26,6 @@ const FormWrapper = styled("div")`
   gap: 20px;
   width: 100%;
 `;
-
-const initProduct = PRODUCTS[0];
 
 export const Top = () => {
   const [username, setUsername] = useState("");

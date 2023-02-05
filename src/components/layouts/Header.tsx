@@ -40,6 +40,7 @@ export const Header: React.FC = () => {
 
         <LinkWrapper>
           <Link to="/vote">Vote</Link>
+          <Link to="/cart">Cart</Link>
           <Link to="/checkout">Checkout</Link>
           {uid ? (
             <span onClick={logout}>logout</span>

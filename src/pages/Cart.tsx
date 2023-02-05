@@ -1,13 +1,13 @@
-import { Product as ProductTemplate } from "../components/templates/Product";
+import { Cart as CartTemplate } from "../components/templates/Cart";
 import { Header } from "../components/layouts";
 import { BaseBox } from "../themes";
 
-export const Product: React.FC = () => {
+export const Cart: React.FC = () => {
   return (
     <>
       <Header />
       <BaseBox>
-        <ProductTemplate />
+        <CartTemplate />
       </BaseBox>
     </>
   );

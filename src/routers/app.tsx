@@ -13,6 +13,7 @@ const { Component } = lazyImport(
 );
 const { Vote } = lazyImport(() => import("../pages/Vote"), "Vote");
 const { Signup } = lazyImport(() => import("../pages/Signup"), "Signup");
+const { Cart } = lazyImport(() => import("../pages/Cart"), "Cart");
 
 export const publicRoutes = [
   {
@@ -26,6 +27,10 @@ export const publicRoutes = [
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
   },
   {
     path: "/checkout",
@@ -61,6 +66,10 @@ export const protectedRoutes = [
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
   },
   {
     path: "/checkout",

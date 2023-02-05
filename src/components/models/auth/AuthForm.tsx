@@ -4,14 +4,10 @@ import { useAuth } from "../../../hooks";
 import { InputText, Button } from "../../uis";
 
 const Wrapper = styled.div`
-  background-color: #fff;
+  background-color: white;
   border-radius: 8px;
-  border: 1px solid gainsboro;
   box-shadow: 10px 20px 30px rgba(0, 0, 0, 0.15);
   padding: 5rem 0;
-  * {
-    box-sizing: border-box;
-  }
 `;
 
 const Content = styled.div`
