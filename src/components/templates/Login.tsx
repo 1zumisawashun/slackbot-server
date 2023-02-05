@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { projectAuth } from "../../libs/firebase";
 import { signInWithCustomToken } from "firebase/auth";
 import { BaseText } from "../../themes";
+import { Button } from "../uis";
 
 export const Login = () => {
   const [lineLoginURL, setLineLoginURL] = useState<string>();
@@ -21,6 +22,7 @@ export const Login = () => {
     // stateを生成＆取得
     const state: any = await firestoreStatesCreate();
     console.log(state, "state");
+
     const url = new URL("https://access.line.me/oauth2/v2.1/authorize");
 
     url.search = new URLSearchParams({
@@ -32,17 +34,14 @@ export const Login = () => {
       redirect_uri: "https://slackbot-server-db4d4.web.app",
     }).toString();
 
-    setLineLoginURL(url.href);
+    window.open(url, "_blank");
   };
 
   const asyncFunc = async (code: string) => {
     const customToken: any = await getCustomToken({ code });
+    console.log(customToken, "customToken");
     signInWithCustomToken(projectAuth, customToken);
   };
-
-  useEffect(() => {
-    getLineLoginURL();
-  }, []);
 
   useEffect(() => {
     if (!code) return;
@@ -53,9 +52,7 @@ export const Login = () => {
     <>
       <BaseText>client_id: {import.meta.env.LINE_LOGIN_CHANNEL_ID}</BaseText>
       <BaseText>line_login_url: {lineLoginURL}</BaseText>
-      <a href={lineLoginURL} target="_blank" rel="noopenner">
-        LINEでログイン
-      </a>
+      <Button onClick={getLineLoginURL}>LINEでログイン</Button>
       <AuthForm type="login" />
     </>
   );
