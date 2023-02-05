@@ -6,13 +6,16 @@ export const useCart = () => {
   const { cart } = context;
 
   const totalAmount = useMemo(() => {
-    return context.cart.reduce((prev, product) => {
+    return cart.reduce((prev, product) => {
       return prev + Number(product.price_jpy);
     }, 0);
   }, [cart]);
 
+  const isEmpty = useMemo(() => cart.length === 0, [cart]);
+
   return {
     ...context,
     totalAmount,
+    isEmpty,
   };
 };

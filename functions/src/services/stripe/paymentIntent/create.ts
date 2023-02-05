@@ -2,14 +2,11 @@ import { stripe } from "../../../libs/stripe";
 import * as functions from "firebase-functions";
 
 export const create = functions.https.onCall(async (data, context) => {
-  const amount = data.amount || 10000;
-  const currency = "jpy";
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount,
-      currency,
+      amount: data.amount,
+      currency: "jpy",
     });
-
     return {
       client_secret: paymentIntent.client_secret,
     };

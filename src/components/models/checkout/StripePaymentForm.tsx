@@ -15,16 +15,18 @@ const Container = styled("div")`
 export const StripePaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
-  const { liff } = useLiff();
+  const { liff, closeWindow } = useLiff();
+
 
   const handleMessage = async (id: string) => {
     if (!liff) return;
     await liff.sendMessages([
       {
         type: "text",
-        text: `Your payment id: ${id}`,
+        text: `ご購入ありがとうございました。\n ${id}`,
       },
     ]);
+    if (closeWindow) closeWindow();
   };
 
   const handleSubmit = async (e: BaseSyntheticEvent) => {

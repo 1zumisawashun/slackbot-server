@@ -11,20 +11,23 @@ const GridWrapper = styled("div")`
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 20px;
+  gap: 20px;
   padding: 20px 0;
 `;
 const ProductCardWrapper = styled("div")`
-  width: 90%;
-  margin: auto;
+  width: 100%;
 `;
-const ButtonWrapper = styled("div")`
+const FlexGapWrapper = styled("div")`
   display: flex;
-  gap: 10px;
+  gap: 20px;
 `;
-const FormWrapper = styled("div")`
+const GapWrapper = styled("div")`
   display: grid;
   gap: 20px;
-  width: 100%;
+  padding: 20px 0;
+  &.-fullwidth {
+    width: 100%;
+  }
 `;
 
 export const Top = () => {
@@ -85,11 +88,12 @@ export const Top = () => {
   };
 
   return (
-    <div className="App">
+    <>
       <DottedOneLine>Hello World {username}</DottedOneLine>
       <DottedOneLine>assessToken:{accessToken}</DottedOneLine>
       <DottedOneLine>uid:{uid}</DottedOneLine>
       <DottedOneLine>line uid:{userId}</DottedOneLine>
+
       <GridWrapper>
         {products.map((product) => (
           <ProductCardWrapper key={product.id}>
@@ -111,7 +115,7 @@ export const Top = () => {
         open={modal.isOpen}
         handleClose={modal.close}
         contents={
-          <FormWrapper>
+          <GapWrapper className="-fullwidth">
             <InputText
               name="name"
               label="product.name"
@@ -138,17 +142,17 @@ export const Top = () => {
               placeholder="yo some text"
               onChange={handleChange}
             />
-          </FormWrapper>
+          </GapWrapper>
         }
         footer={
-          <ButtonWrapper>
+          <FlexGapWrapper>
             <Button onClick={handleProductsCreate}>
               {isPending ? "送信中..." : "送信"}
             </Button>
             <Button onClick={modal.close}>閉じる</Button>
-          </ButtonWrapper>
+          </FlexGapWrapper>
         }
       />
-    </div>
+    </>
   );
 };

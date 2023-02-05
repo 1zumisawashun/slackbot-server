@@ -9,15 +9,13 @@ const GapWrapper = styled("div")`
   display: grid;
   gap: 20px;
   padding: 20px 0;
+  &.-fullwidth {
+    width: 100%;
+  }
 `;
-const ButtonWrapper = styled("div")`
+const FlexGapWrapper = styled("div")`
   display: flex;
-  gap: 10px;
-`;
-const FormWrapper = styled("div")`
-  display: grid;
   gap: 20px;
-  width: 100%;
 `;
 
 export const Vote = () => {
@@ -59,20 +57,20 @@ export const Vote = () => {
         open={modal.isOpen}
         handleClose={modal.close}
         contents={
-          <FormWrapper>
+          <GapWrapper className="-fullwidth">
             <InputText
               placeholder="yo some text"
               onChange={(e) => setText(e.target.value)}
             />
-          </FormWrapper>
+          </GapWrapper>
         }
         footer={
-          <ButtonWrapper>
+          <FlexGapWrapper>
             <Button onClick={handleVotesCreate}>
               {isPending ? "送信中..." : "送信"}
             </Button>
             <Button onClick={modal.close}>閉じる</Button>
-          </ButtonWrapper>
+          </FlexGapWrapper>
         }
       />
     </>

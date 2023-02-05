@@ -1,16 +1,11 @@
 import styled from "@emotion/styled";
 import { useCart } from "../../../hooks";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { InputText, ButtonIconRemove, ButtonIconAdd } from "../../uis";
 
 const CounterWrapper = styled("div")`
   display: flex;
   gap: 10px;
-  justify-content: center;
-`;
-const Quantity = styled("p")`
-  display: block;
-  margin: auto;
+  align-items: center;
 `;
 
 type CartCounterProps = {
@@ -26,9 +21,9 @@ export const CartCounter: React.FC<CartCounterProps> = ({
 
   return (
     <CounterWrapper>
-      <RemoveCircleOutlineIcon onClick={() => countDownProduct(productId)} />
-      <Quantity>{amount}</Quantity>
-      <AddCircleOutlineIcon onClick={() => countUpProduct(productId)} />
+      <ButtonIconRemove onClick={() => countDownProduct(productId)} />
+      <InputText value={String(amount)} size="small" readOnly />
+      <ButtonIconAdd onClick={() => countUpProduct(productId)} />
     </CounterWrapper>
   );
 };

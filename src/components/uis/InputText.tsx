@@ -66,7 +66,6 @@ export interface InputTextProps {
   icon?: JSX.Element;
   readOnly?: boolean;
   variant?: "filled" | "outlined" | "standard";
-  placeholderColor?: string;
   isLeftIcon?: boolean;
 }
 
@@ -95,7 +94,6 @@ export const InputText: React.FC<InputTextProps> = ({
   icon = null,
   readOnly = false,
   variant = "outlined",
-  placeholderColor,
   isLeftIcon = false,
 }) => {
   /*eslint-disable react/jsx-no-duplicate-props*/
@@ -127,7 +125,6 @@ export const InputText: React.FC<InputTextProps> = ({
         inputRef={inputRef}
         size={size}
         variant={variant}
-        placeholdercolor={placeholderColor}
         InputProps={{
           startAdornment:
             icon && isLeftIcon ? (

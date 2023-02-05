@@ -3,20 +3,20 @@ import { useState, BaseSyntheticEvent } from "react";
 import { useAuth } from "../../../hooks";
 import { InputText, Button } from "../../uis";
 
-const Wrapper = styled.div`
+const Wrapper = styled("div")`
   background-color: white;
   border-radius: 8px;
   box-shadow: 10px 20px 30px rgba(0, 0, 0, 0.15);
   padding: 5rem 0;
 `;
 
-const Content = styled.div`
+const Content = styled("div")`
   display: grid;
   gap: 1rem;
   justify-items: center;
 `;
 
-const FormContainer = styled.form`
+const FormContainer = styled("form")`
   display: grid;
   gap: 20px;
   width: 100%;

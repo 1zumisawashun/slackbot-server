@@ -4,8 +4,8 @@ import styled from "@emotion/styled";
 import { useCart } from "../../../hooks";
 import { CartCounter } from "./CartCounter";
 import { Product } from "../../../types/Product";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { DottedOneLine, BaseText } from "../../../themes";
+import { ButtonIconDelete } from "../../uis";
 
 const FlexWrapper = styled("div")`
   display: flex;
@@ -14,7 +14,7 @@ const ContentWrapper = styled("div")`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 10px;
+  padding: 5px 15px;
 `;
 const Content = styled("div")`
   align-content: space-between;
@@ -28,9 +28,9 @@ const styledImage = css`
   margin-bottom: -10px;
 `;
 
-interface CartListProps {
+type CartListProps = {
   products: Product[];
-}
+};
 
 export const CartList: React.FC<CartListProps> = ({ products }) => {
   const { removeProductFromCart } = useCart();
@@ -57,7 +57,11 @@ export const CartList: React.FC<CartListProps> = ({ products }) => {
                 <CartCounter amount={product.amount} productId={product.id} />
               </Content>
 
-              <DeleteIcon onClick={() => removeProductFromCart(product.id)} />
+              <div>
+                <ButtonIconDelete
+                  onClick={() => removeProductFromCart(product.id)}
+                />
+              </div>
             </ContentWrapper>
           </FlexWrapper>
         ))}

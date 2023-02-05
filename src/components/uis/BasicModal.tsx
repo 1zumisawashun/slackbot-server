@@ -19,14 +19,13 @@ const ModalInner = styled("div")<{ size: string }>`
 `;
 
 const Headline = styled("p")`
-  font-size: 24px;
+  font-size: 20px;
   padding: 0 30px;
   text-align: center;
   font-weight: bold;
 `;
 
 const ContentWrapper = styled("div")`
-  border-radius: 10px;
   display: flex;
   justify-content: center;
   margin: 30px;

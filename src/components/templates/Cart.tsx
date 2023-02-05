@@ -11,13 +11,17 @@ const GapWrapper = styled("div")`
 `;
 
 export const Cart = () => {
-  const { cart } = useCart();
+  const { cart, isEmpty } = useCart();
   const navigate = useNavigate();
 
   return (
     <GapWrapper>
       <CartList products={cart} />
-      <Button onClick={() => navigate("/checkout")}>決済画面に進む</Button>
+      {isEmpty && <Button onClick={() => navigate("/")}>商品を見る</Button>}
+
+      <Button isDisabled={isEmpty} onClick={() => navigate("/checkout")}>
+        決済画面に進む
+      </Button>
     </GapWrapper>
   );
 };
