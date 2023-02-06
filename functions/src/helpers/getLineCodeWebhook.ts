@@ -5,15 +5,13 @@ export const getLineCodeWebhook = functions.https.onRequest(
   async (req, res) => {
     const code = req.query.code;
     const state = req.query.state;
-
     const isValidState = (await db.doc(`states/${state}`).get()).exists;
-
     if (!isValidState) return;
 
     if (code) {
-      res.redirect(`http://127.0.0.1:5173/login?code=${code}`);
+      res.redirect(`https://slackbot-server-db4d4.web.app/login?code=${code}`);
     } else {
-      res.redirect(`http://127.0.0.1:5173`);
+      res.redirect(`https://slackbot-server-db4d4.web.app`);
     }
   }
 );

@@ -40,6 +40,10 @@ export const protectedRoutes = [
     element: <Top />,
   },
   {
+    path: "/login",
+    element: <Login />,
+  },
+  {
     path: "/cart",
     element: <Cart />,
   },
