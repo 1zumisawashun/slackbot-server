@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/css";
-import { useCart } from "../../hooks";
+import { useCart, useAuth } from "../../hooks";
 import { Button } from "../uis";
 import { fetchProduct } from "../../services";
 import { useParams } from "react-router-dom";
@@ -14,7 +14,6 @@ const GapWrapper = styled("div")`
     padding: 0;
   }
 `;
-
 const ContentWrapper = styled("div")`
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 4px;
@@ -22,7 +21,6 @@ const ContentWrapper = styled("div")`
   padding: 16px;
   position: relative;
 `;
-
 const Title = styled(DottedOneLine)`
   background-color: #f4f4f4;
   font-size: 20px;
@@ -42,6 +40,7 @@ export const Product = () => {
   const { id } = useParams<{ id: string }>();
   const { product } = fetchProduct(String(id));
   const { addProductToCart } = useCart();
+  const { uid } = useAuth();
 
   return (
     <GapWrapper>
@@ -61,7 +60,10 @@ export const Product = () => {
         </GapWrapper>
       </ContentWrapper>
 
-      <Button onClick={() => addProductToCart(product)}>
+      <Button
+        isDisabled={!Boolean(uid)}
+        onClick={() => addProductToCart(product)}
+      >
         カートに追加する
       </Button>
     </GapWrapper>

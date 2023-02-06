@@ -42,7 +42,6 @@ const addProductToCart = (product: Product, state: State) => {
       updatedCart[updatedItemIndex] = updatedItem;
     }
   }
-  console.log(updatedCart, "updatedCart");
   return { ...state, cart: updatedCart };
 };
 

@@ -44,6 +44,10 @@ export const getCustomToken = functions.https.onCall(async (data, context) => {
   // Firebaseログインに用いるUIDを管理
   let uid: string = context.auth?.uid as string;
 
+  /**
+   * https://qiita.com/suin/items/9554c70ed3571be0f08c
+   * jsonに変換して標準出力すれば構造化されたログを見ることができる
+   */
   console.log(JSON.stringify(context.auth), "context.auth");
 
   // LINE連携済みのユーザーを取得

@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { useState, BaseSyntheticEvent } from "react";
 import { useAuth } from "../../../hooks";
 import { InputText, Button } from "../../uis";
+import line from "../../../assets/btn_login_base.png";
+import { css } from "@emotion/css";
 
 const Wrapper = styled("div")`
   background-color: white;
@@ -23,12 +25,20 @@ const FormContainer = styled("form")`
 const Title = styled("h1")`
   font-size: 20px;
 `;
+const styledImage = css`
+  display: block;
+  cursor: pointer;
+  :hover {
+    opacity: 0.8;
+  }
+`;
 
 type AuthFormProps = {
   type: "signup" | "login";
+  handleLine?: () => void;
 };
 
-export const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
+export const AuthForm: React.FC<AuthFormProps> = ({ type, handleLine }) => {
   const { login, signup } = useAuth();
 
   const [email, setEmail] = useState<string>("");
@@ -61,6 +71,14 @@ export const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
+          {type === "login" && (
+            <img
+              src={line}
+              alt="line_login_icon"
+              className={styledImage}
+              onClick={handleLine}
+            />
+          )}
           <Button type="submit">{button}</Button>
         </FormContainer>
       </Content>

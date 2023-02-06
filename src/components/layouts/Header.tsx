@@ -6,12 +6,12 @@ import logo from "../../assets/logo.jpg";
 import { useAuth, useDisclosure } from "../../hooks";
 import { BasicModal, Button } from "../uis";
 import { BaseText } from "../../themes";
+import { useNavigate } from "react-router-dom";
 
 const CustomAppbar = styled(AppBar)<{ theme?: Theme }>`
   background: white;
   z-index: ${({ theme }) => theme.zIndex.drawer + 2};
 `;
-
 const CustomToolbar = styled(Toolbar)`
   color: black;
   display: flex;
@@ -20,12 +20,13 @@ const CustomToolbar = styled(Toolbar)`
     min-height: 60px;
   }
 `;
-
 const FlexGapWrapper = styled("div")`
   display: flex;
   gap: 20px;
 `;
-
+const CustomSpan = styled("span")`
+  cursor: pointer;
+`;
 const styledIcon = css`
   height: 40px;
   width: 40px;
@@ -33,7 +34,10 @@ const styledIcon = css`
 
 export const Header: React.FC = () => {
   const { uid, logout } = useAuth();
-  const modal = useDisclosure();
+  const logoutModal = useDisclosure();
+  const loginModal = useDisclosure();
+  const navigate = useNavigate();
+
   return (
     <>
       <CustomAppbar position="fixed">
@@ -45,15 +49,18 @@ export const Header: React.FC = () => {
           </div>
 
           <FlexGapWrapper>
-            <Link to="/cart">Cart</Link>
-            <Link to="/vote">Vote</Link>
-            <Link to="/component">Component</Link>
             {uid ? (
-              <span onClick={modal.open} style={{ cursor: "pointer" }}>
-                logout
-              </span>
+              <>
+                <Link to="/cart">Cart</Link>
+                <Link to="/vote">Vote</Link>
+                <Link to="/component">Component</Link>
+                <CustomSpan onClick={logoutModal.open}>Logout</CustomSpan>
+              </>
             ) : (
               <>
+                <CustomSpan onClick={loginModal.open}>Cart</CustomSpan>
+                <CustomSpan onClick={loginModal.open}>Vote</CustomSpan>
+                <CustomSpan onClick={loginModal.open}>Component</CustomSpan>
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Signup</Link>
               </>
@@ -64,13 +71,25 @@ export const Header: React.FC = () => {
 
       <BasicModal
         title="警告"
-        open={modal.isOpen}
-        handleClose={modal.close}
+        open={logoutModal.isOpen}
+        handleClose={logoutModal.close}
         contents={<BaseText>本当にログアウトしますか？</BaseText>}
         footer={
           <FlexGapWrapper>
             <Button onClick={logout}>はい</Button>
-            <Button onClick={modal.close}>いいえ</Button>
+            <Button onClick={logoutModal.close}>いいえ</Button>
+          </FlexGapWrapper>
+        }
+      />
+      <BasicModal
+        title="警告"
+        open={loginModal.isOpen}
+        handleClose={loginModal.close}
+        contents={<BaseText>ログインしてください。</BaseText>}
+        footer={
+          <FlexGapWrapper>
+            <Button onClick={() => navigate("/login")}>ログインする</Button>
+            <Button onClick={loginModal.close}>閉じる</Button>
           </FlexGapWrapper>
         }
       />

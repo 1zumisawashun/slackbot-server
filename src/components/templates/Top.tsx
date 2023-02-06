@@ -37,7 +37,6 @@ export const Top = () => {
   const [product, setProduct] = useState<Product>(initProduct);
 
   const modal = useDisclosure();
-
   const { liff, userId } = useLiff();
   const { uid } = useAuth();
   const { products } = fetchProducts();
@@ -108,7 +107,9 @@ export const Top = () => {
         ))}
       </GridWrapper>
 
-      <Button onClick={modal.open}>商品を追加する</Button>
+      <Button onClick={modal.open} isDisabled={!Boolean(uid)}>
+        商品を追加する
+      </Button>
 
       <BasicModal
         title="商品を追加する"

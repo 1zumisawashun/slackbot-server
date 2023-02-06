@@ -15,10 +15,15 @@ const { Vote } = lazyImport(() => import("../pages/Vote"), "Vote");
 const { Signup } = lazyImport(() => import("../pages/Signup"), "Signup");
 const { Cart } = lazyImport(() => import("../pages/Cart"), "Cart");
 
+// NOTE:商品一覧・商品詳細はログインなしで閲覧可能にする
 export const publicRoutes = [
   {
     path: "/",
     element: <Top />,
+  },
+  {
+    path: "/product/:id",
+    element: <Product />,
   },
   {
     path: "/login",
@@ -38,10 +43,6 @@ export const protectedRoutes = [
   {
     path: "/",
     element: <Top />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
   },
   {
     path: "/cart",

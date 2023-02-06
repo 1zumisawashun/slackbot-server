@@ -62,24 +62,22 @@ export const useAuth = () => {
   };
 
   /**
-   * getLineLoginURLイベントハンドラがやりたいのは下記のようなURLの生成
+   * openLineLoginURLイベントハンドラがやりたいのは下記のようなURLの新規タブ生成
    * "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=チャンネルID&redirect_uri=https%3A%2F%2Fexample.com&state=乱数&scope=profile"
    */
   const openLineLoginURL = async () => {
-    // stateを生成＆取得
     const state: any = await firestoreStatesCreate();
     const url = new URL("https://access.line.me/oauth2/v2.1/authorize");
 
     url.search = new URLSearchParams({
       response_type: "code", // 固定でcodeとする
       client_id: "1657869139", // チャネルのクライアントID
-      state: state.data, // stateを設定
+      state: state.data, // NOTE:csrf対策のためstateを生成＆取得する
       scope: "profile openid email", // LINEから取得する情報
       bot_prompt: "aggressive", // ログイン時にBOTと連携させたい場合
-      redirect_uri: "https://slackbot-server-db4d4.web.app/login",
+      redirect_uri: "https://slackbot-server-db4d4.web.app/login", // NOTE:URLにredirect_uriにcode・state・friendship_status_changedが付与される
     }).toString();
 
-    // NOTE:URLに「code」「state」「friendship_status_changed」がついたリダイレクトが実行される
     window.open(url, "_blank");
   };
 
