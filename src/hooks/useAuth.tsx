@@ -49,7 +49,7 @@ export const useAuth = () => {
     }
   }, []);
 
-  const loginWithCustomToken = async (code: string) => {
+  const loginWithCustomToken = useCallback(async (code: string) => {
     const customToken: any = await getCustomToken({ code });
     console.log(customToken, "customToken");
 
@@ -59,13 +59,13 @@ export const useAuth = () => {
     } catch (error) {
       alert(error);
     }
-  };
+  }, []);
 
   /**
    * openLineLoginURLイベントハンドラがやりたいのは下記のようなURLの新規タブ生成
    * "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=チャンネルID&redirect_uri=https%3A%2F%2Fexample.com&state=乱数&scope=profile"
    */
-  const openLineLoginURL = async () => {
+  const openLineLoginURL = useCallback(async () => {
     const state: any = await firestoreStatesCreate();
     const url = new URL("https://access.line.me/oauth2/v2.1/authorize");
 
@@ -79,7 +79,7 @@ export const useAuth = () => {
     }).toString();
 
     window.open(url, "_blank");
-  };
+  }, []);
 
   useEffect(() => {
     onAuthStateChanged(projectAuth, (user) => {

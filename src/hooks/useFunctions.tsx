@@ -60,6 +60,6 @@ export const useFunctions = () => {
     firestoreVotesDelete,
     firestoreStatesCreate,
     onCallTemplate,
-    getCustomToken
+    getCustomToken,
   };
 };

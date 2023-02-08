@@ -3,10 +3,9 @@ import { AppBar, Toolbar } from "@mui/material";
 import { css } from "@emotion/css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.jpg";
-import { useAuth, useDisclosure } from "../../hooks";
+import { useAuth, useDisclosure, useNavigate } from "../../hooks";
 import { BasicModal, Button } from "../uis";
 import { BaseText } from "../../themes";
-import { useNavigate } from "react-router-dom";
 
 const CustomAppbar = styled(AppBar)<{ theme?: Theme }>`
   background: white;
@@ -36,7 +35,7 @@ export const Header: React.FC = () => {
   const { uid, logout } = useAuth();
   const logoutModal = useDisclosure();
   const loginModal = useDisclosure();
-  const navigate = useNavigate();
+  const { pushToLogin } = useNavigate();
 
   return (
     <>
@@ -88,7 +87,7 @@ export const Header: React.FC = () => {
         contents={<BaseText>ログインしてください。</BaseText>}
         footer={
           <FlexGapWrapper>
-            <Button onClick={() => navigate("/login")}>ログインする</Button>
+            <Button onClick={pushToLogin}>ログインする</Button>
             <Button onClick={loginModal.close}>閉じる</Button>
           </FlexGapWrapper>
         }
