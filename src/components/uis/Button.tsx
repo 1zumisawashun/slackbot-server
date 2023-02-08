@@ -1,11 +1,6 @@
 import { ReactNode } from "react";
 import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import styled from "@emotion/styled";
-
-const CustomCircularProgress = styled(CircularProgress)<{ className?: string }>`
-  color: ${({ className }) => (className === "contained" ? "white" : null)};
-`;
 
 interface ButtonProps
   extends Pick<MuiButtonProps, Exclude<keyof MuiButtonProps, "color">> {
@@ -51,7 +46,7 @@ export const Button: React.FC<ButtonProps> = ({
       endIcon={endIcon}
     >
       {!isLoading && <p>{children}</p>}
-      {isLoading && <CustomCircularProgress className={variant} size={25} />}
+      {isLoading && <CircularProgress size={20} />}
     </MuiButton>
   );
 };

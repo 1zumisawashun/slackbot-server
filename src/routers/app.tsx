@@ -1,4 +1,4 @@
-import { lazyImport } from "../utilities/lazyImport";
+import { lazyImport } from "../utilities";
 import { useRoutes } from "react-router-dom";
 import { useAuth } from "../hooks";
 

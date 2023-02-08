@@ -66,8 +66,8 @@ export const Vote = () => {
         }
         footer={
           <FlexGapWrapper>
-            <Button onClick={handleVotesCreate}>
-              {isPending ? "送信中..." : "送信"}
+            <Button onClick={handleVotesCreate} isLoading={isPending}>
+              追加する
             </Button>
             <Button onClick={modal.close}>閉じる</Button>
           </FlexGapWrapper>

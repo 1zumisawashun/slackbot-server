@@ -65,7 +65,11 @@ export const CartList: React.FC<CartListProps> = ({ products }) => {
                 </div>
               </Content>
 
-              <CartCounter amount={product.amount} productId={product.id} />
+              <CartCounter
+                amount={product.amount}
+                productId={product.id}
+                maxCount={product.stock_quantity}
+              />
             </ContentWrapper>
           </FlexWrapper>
         ))}

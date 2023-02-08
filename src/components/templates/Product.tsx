@@ -57,6 +57,12 @@ export const Product = () => {
             <BaseText className="-inline">（税込）</BaseText>
           </div>
           <BaseText>{product.description}</BaseText>
+          <div>
+            <BaseText className="-inline">在庫数：</BaseText>
+            <BaseText className="-orange -inline -bold">
+              {product.stock_quantity}
+            </BaseText>
+          </div>
         </GapWrapper>
       </ContentWrapper>
 

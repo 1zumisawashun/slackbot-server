@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import {
   PaymentElement,
   useElements,
@@ -13,10 +13,10 @@ const Container = styled("div")`
 `;
 
 export const StripePaymentForm = () => {
+  const [isPending, setIsPending] = useState<boolean>(false);
   const stripe = useStripe();
   const elements = useElements();
   const { liff, closeWindow } = useLiff();
-
 
   const handleMessage = async (id: string) => {
     if (!liff) return;
@@ -32,11 +32,18 @@ export const StripePaymentForm = () => {
   const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     if (!stripe || !elements) return;
-    const result = await stripe.confirmPayment({
-      elements,
-      redirect: "if_required",
-    });
-    handleMessage(result.paymentIntent?.id ?? "");
+    setIsPending(true);
+    try {
+      const result = await stripe.confirmPayment({
+        elements,
+        redirect: "if_required",
+      });
+      handleMessage(result.paymentIntent?.id ?? "");
+      setIsPending(false);
+    } catch (error) {
+      setIsPending(false);
+      alert(error);
+    }
   };
 
   return (
@@ -44,7 +51,9 @@ export const StripePaymentForm = () => {
       <Container>
         <PaymentElement />
       </Container>
-      <Button type="submit">購入する</Button>
+      <Button type="submit" isLoading={isPending}>
+        購入する
+      </Button>
     </form>
   );
 };

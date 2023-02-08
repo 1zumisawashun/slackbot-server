@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
 import { slackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "../../helpers";
-import { useFunctions, useLiff } from "../../hooks";
+import { useFunctions, useLiff, useAuth } from "../../hooks";
 import { Button } from "../uis";
+import { DottedOneLine } from "../../themes";
 
 const GapWrapper = styled("div")`
   display: grid;
   gap: 20px;
   padding: 20px 0;
 `;
-
 const ComponentContainer = styled("div")`
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 4px;
@@ -16,7 +17,6 @@ const ComponentContainer = styled("div")`
   padding: 16px;
   position: relative;
 `;
-
 const Title = styled("p")`
   background-color: #f4f4f4;
   font-size: 20px;
@@ -26,10 +26,29 @@ const Title = styled("p")`
   top: -16px;
 `;
 
+const alertText =
+  "This button is unavailable as LIFF is currently being opened in an external browser.";
+
 export const Component = () => {
+  const [username, setUsername] = useState("");
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  const { uid } = useAuth();
   const { onCallTemplate, stripeCheckoutSessionsCreate, stripeProductsCreate } =
     useFunctions();
-  const { liff, isInClient, closeWindow } = useLiff();
+  const { liff, isInClient, closeWindow, userId } = useLiff();
+
+  const asyncLiffFunc = async () => {
+    if (!liff) return;
+    const profile = await liff.getProfile();
+    setUsername(profile.displayName);
+    const token = await liff.getAccessToken();
+    setAccessToken(token);
+  };
+
+  useEffect(() => {
+    asyncLiffFunc();
+  }, [liff]);
 
   const handleSlack = () => {
     const params = {
@@ -45,21 +64,13 @@ export const Component = () => {
   };
 
   const handleTest = async () => {
-    const res = await onCallTemplate({ name: "yo some text!" });
+    const res = await onCallTemplate({ name: "yo some text" });
     alert(res);
   };
 
   const postLiff = async () => {
-    if (!isInClient) {
-      window.alert(
-        "This button is unavailable as LIFF is currently being opened in an external browser."
-      );
-      return;
-    }
-    if (!liff) {
-      window.alert(
-        "This button is unavailable as LIFF is currently being opened in an external browser."
-      );
+    if (!isInClient || !liff) {
+      alert(alertText);
       return;
     }
     try {
@@ -87,6 +98,14 @@ export const Component = () => {
 
   return (
     <GapWrapper>
+      <ComponentContainer>
+        <Title>User Information</Title>
+        <DottedOneLine>username: {username}</DottedOneLine>
+        <DottedOneLine>assess token: {accessToken}</DottedOneLine>
+        <DottedOneLine>firebase uid: {uid}</DottedOneLine>
+        <DottedOneLine>line uid: {userId}</DottedOneLine>
+      </ComponentContainer>
+
       <ComponentContainer>
         <Title>Slack Notification</Title>
         <Button onClick={handleSlack}>Slack Notification</Button>

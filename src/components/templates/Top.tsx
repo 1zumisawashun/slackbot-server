@@ -1,8 +1,7 @@
-import { useEffect, useState, BaseSyntheticEvent } from "react";
+import { useState, BaseSyntheticEvent } from "react";
 import styled from "@emotion/styled";
-import { useAuth, useLiff, useDisclosure } from "../../hooks";
+import { useAuth, useDisclosure } from "../../hooks";
 import { ProductCard } from "../models";
-import { DottedOneLine } from "../../themes";
 import { BasicModal, InputText, Button } from "../uis";
 import { Product, initProduct } from "../../types/Product";
 import { createProducts, fetchProducts } from "../../services";
@@ -31,27 +30,12 @@ const GapWrapper = styled("div")`
 `;
 
 export const Top = () => {
-  const [username, setUsername] = useState("");
-  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
   const [product, setProduct] = useState<Product>(initProduct);
 
   const modal = useDisclosure();
-  const { liff, userId } = useLiff();
   const { uid } = useAuth();
   const { products } = fetchProducts();
-
-  const asyncLiffFunc = async () => {
-    if (!liff) return;
-    const profile = await liff.getProfile();
-    setUsername(profile.displayName);
-    const token = await liff.getAccessToken();
-    setAccessToken(token);
-  };
-
-  useEffect(() => {
-    asyncLiffFunc();
-  }, [liff]);
 
   const handleChange = (e: BaseSyntheticEvent) => {
     const { name, value } = e.target;
@@ -88,11 +72,6 @@ export const Top = () => {
 
   return (
     <>
-      <DottedOneLine>Hello World {username}</DottedOneLine>
-      <DottedOneLine>assessToken:{accessToken}</DottedOneLine>
-      <DottedOneLine>uid:{uid}</DottedOneLine>
-      <DottedOneLine>line uid:{userId}</DottedOneLine>
-
       <GridWrapper>
         {products.map((product) => (
           <ProductCardWrapper key={product.id}>
@@ -147,8 +126,8 @@ export const Top = () => {
         }
         footer={
           <FlexGapWrapper>
-            <Button onClick={handleProductsCreate}>
-              {isPending ? "送信中..." : "送信"}
+            <Button onClick={handleProductsCreate} isLoading={isPending}>
+              追加する
             </Button>
             <Button onClick={modal.close}>閉じる</Button>
           </FlexGapWrapper>

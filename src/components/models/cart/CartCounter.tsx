@@ -11,11 +11,13 @@ const CounterWrapper = styled("div")`
 type CartCounterProps = {
   productId: string;
   amount: number;
+  maxCount: number;
 };
 
 export const CartCounter: React.FC<CartCounterProps> = ({
   amount,
   productId,
+  maxCount,
 }) => {
   const { countDownProduct, countUpProduct } = useCart();
 
@@ -23,7 +25,10 @@ export const CartCounter: React.FC<CartCounterProps> = ({
     <CounterWrapper>
       <ButtonIconRemove onClick={() => countDownProduct(productId)} />
       <InputText value={String(amount)} size="small" readOnly />
-      <ButtonIconAdd onClick={() => countUpProduct(productId)} />
+      <ButtonIconAdd
+        onClick={() => countUpProduct(productId)}
+        isDisabled={maxCount <= amount}
+      />
     </CounterWrapper>
   );
 };

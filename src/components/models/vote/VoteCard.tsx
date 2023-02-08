@@ -12,7 +12,6 @@ const CardContainer = styled("div")`
   padding: 16px;
   position: relative;
 `;
-
 const Title = styled("p")`
   background-color: #f4f4f4;
   font-size: 20px;
@@ -21,13 +20,11 @@ const Title = styled("p")`
   position: absolute;
   top: -16px;
 `;
-
 const CardInner = styled("div")`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
-
 const FlexGapWrapper = styled("div")`
   display: flex;
   gap: 10px;
@@ -73,11 +70,17 @@ export const VoteCard: React.FC<VoteCardProps> = ({ vote }) => {
         </FlexGapWrapper>
 
         <FlexGapWrapper>
-          <Button onClick={() => handleVotesUpdate(vote.id)}>
-            {status === "updating" ? "投票中..." : "投票"}
+          <Button
+            onClick={() => handleVotesUpdate(vote.id)}
+            isLoading={status === "updating"}
+          >
+            投票
           </Button>
-          <Button onClick={() => handleVotesDelete(vote.id)}>
-            {status === "deleting" ? "削除中..." : "削除"}
+          <Button
+            onClick={() => handleVotesDelete(vote.id)}
+            isLoading={status === "deleting"}
+          >
+            削除
           </Button>
         </FlexGapWrapper>
       </CardInner>
