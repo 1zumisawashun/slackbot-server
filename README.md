@@ -4,9 +4,9 @@ slackbot-server のリポジトリです。
 
 ## Overview
 
-本来は slack 通知の検証として使っていたリポジトリだが他の検証も重ねているうちに肥大化してしまった  
-現在は LIFF アプリとして活用している  
-リポジトリ名が slackbot-server と命名されているが中身は LIFF アプリなので注意  
+本来は slack 通知の検証として使っていたリポジトリだが他の検証も重ねているうちに肥大化してしまった。  
+現在は LIFF アプリとして活用している。  
+リポジトリ名が slackbot-server と命名されているが中身は LIFF アプリなので注意。
 
 - slack（Incoming Webhooks）の検証
 - liff の検証
@@ -15,18 +15,20 @@ slackbot-server のリポジトリです。
 - firebase ver9 の検証
 
 ※下記 QR コード読み取りで LINE チャネルに遷移できます。  
-※LINEチャネルに遷移後「いでよ」メッセージを打つことでLIFFアプリを返答します。
+※LINE チャネルに遷移後「いでよ」メッセージを打つことで LIFF アプリを返答します。
 
 <img width="996" alt="image" src="https://user-images.githubusercontent.com/65071534/217398285-c3fcf34c-944e-47de-8c37-da1713275dfc.png">
 
 ## 環境
 
-- react 18.2.0
-- firebase 9.15.0
-- typescript 4.9.3
-- stripe 11.7.0
-- @stripe/react-stripe-js 1.16.3
-- @stripe/stripe-js 1.46.0
+| ライブラリ              | バージョン |
+| ----------------------- | ---------- |
+| react                   | 18.2.0     |
+| firebase                | 9.15.0     |
+| typescript              | 4.9.3      |
+| stripe                  | 11.7.0     |
+| @stripe/react-stripe-js | 1.16.3     |
+| @stripe/stripe-js       | 1.46.0     |
 
 ## Installation
 

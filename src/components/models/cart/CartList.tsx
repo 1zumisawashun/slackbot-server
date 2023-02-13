@@ -40,7 +40,7 @@ export const CartList: React.FC<CartListProps> = ({ products }) => {
       {products.length !== 0 &&
         products.map((product) => (
           <FlexWrapper key={product.id}>
-            <Link to={`/products/${product.id}`}>
+            <Link to={`/product/${product.id}`}>
               <img
                 src={product.images[0].url}
                 alt={product.images[0].title}
