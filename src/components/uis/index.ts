@@ -6,3 +6,4 @@ export {
   ButtonIconRemove,
   ButtonIconAdd,
 } from "./ButtonIcon";
+export { FilterButton } from "./FilterButton";

@@ -6,6 +6,11 @@ import {
   signOut,
   signInWithEmailAndPassword,
   signInWithCustomToken,
+  updateEmail,
+  updatePassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  User,
 } from "firebase/auth";
 import { useEffect } from "react";
 import { useFunctions } from "../hooks";
@@ -15,10 +20,28 @@ type Params = {
   password: string;
 };
 
+type UpdateEmailParams = {
+  email: string;
+  newEmail: string;
+  password: string;
+};
+
+type UpdatePasswordParams = {
+  email: string;
+  newPassword: string;
+  password: string;
+};
+
+type CredentialParams = {
+  email: string;
+  password: string;
+  currentUser: User;
+};
+
 export const useAuth = () => {
   const { firestoreStatesCreate, getCustomToken } = useFunctions();
-
   const [uid, setUid] = useState<string>("");
+  const currentUser = projectAuth.currentUser;
 
   const signup = useCallback(async (params: Params) => {
     const { email, password } = params;
@@ -48,6 +71,43 @@ export const useAuth = () => {
       alert(error);
     }
   }, []);
+
+  const handleCredential = useCallback(async (params: CredentialParams) => {
+    const { email, password, currentUser } = params;
+    const credential = await EmailAuthProvider.credential(email, password);
+    await reauthenticateWithCredential(currentUser, credential);
+  }, []);
+
+  const handleUpdateEmail = useCallback(async (params: UpdateEmailParams) => {
+    const { email, newEmail, password } = params;
+    if (!currentUser) return;
+
+    await handleCredential({ email, password, currentUser });
+
+    try {
+      await updateEmail(currentUser, newEmail);
+    } catch (error) {
+      const copiedError = error as any;
+      console.log(copiedError);
+    }
+  }, []);
+
+  const handleUpdatePassword = useCallback(
+    async (params: UpdatePasswordParams) => {
+      const { email, newPassword, password } = params;
+      if (!currentUser) return;
+
+      await handleCredential({ email, password, currentUser });
+
+      try {
+        await updatePassword(currentUser, newPassword);
+      } catch (error) {
+        const copiedError = error as any;
+        console.log(copiedError);
+      }
+    },
+    []
+  );
 
   const loginWithCustomToken = useCallback(async (code: string) => {
     const customToken: any = await getCustomToken({ code });
@@ -87,5 +147,14 @@ export const useAuth = () => {
     });
   }, []);
 
-  return { uid, signup, logout, login, loginWithCustomToken, openLineLoginURL };
+  return {
+    uid,
+    signup,
+    logout,
+    login,
+    loginWithCustomToken,
+    openLineLoginURL,
+    handleUpdateEmail,
+    handleUpdatePassword,
+  };
 };

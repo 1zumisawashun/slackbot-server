@@ -14,6 +14,7 @@ const { Component } = lazyImport(
 const { Vote } = lazyImport(() => import("../pages/Vote"), "Vote");
 const { Signup } = lazyImport(() => import("../pages/Signup"), "Signup");
 const { Cart } = lazyImport(() => import("../pages/Cart"), "Cart");
+const { Mypage } = lazyImport(() => import("../pages/Mypage"), "Mypage");
 
 // NOTE:商品一覧・商品詳細はログインなしで閲覧可能にする
 export const publicRoutes = [
@@ -59,6 +60,10 @@ export const protectedRoutes = [
   {
     path: "/vote",
     element: <Vote />,
+  },
+  {
+    path: "/mypage",
+    element: <Mypage />,
   },
   {
     path: "*",

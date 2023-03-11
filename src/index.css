@@ -107,58 +107,6 @@ a {
   outline: none;
 }
 
-/* Form Style Reset */
-input,
-button,
-select,
-textarea {
-  font: inherit;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-textarea {
-  resize: none;
-}
-
-input[type="checkbox"],
-input[type="radio"] {
-  display: none;
-}
-
-input[type="submit"],
-input[type="button"],
-label,
-button,
-select {
-  cursor: pointer;
-}
-
-select::-ms-expand {
-  display: none;
-}
-
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px white inset;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Element Layer */
-
 body {
   max-width: 560px;
   height: 100%;
@@ -171,46 +119,4 @@ body {
   -webkit-font-smoothing: antialiased;
   word-wrap: break-word;
   overflow-wrap: break-word;
-}
-
-/* for react-error-boundary */
-
-body > Iframe {
-  display: None !important;
-}
-
-/* base styles */
-
-ul,
-li,
-p,
-h1,
-h2,
-h3,
-h4 {
-  margin: 0;
-  padding: 0;
-}
-ul {
-  list-style-type: none;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  color: #1a1a1a;
-  border: 1px solid #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }

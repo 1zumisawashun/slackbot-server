@@ -32,8 +32,7 @@ const styledIcon = css`
 `;
 
 export const Header: React.FC = () => {
-  const { uid, logout } = useAuth();
-  const logoutModal = useDisclosure();
+  const { uid } = useAuth();
   const loginModal = useDisclosure();
   const { pushToLogin } = useNavigate();
 
@@ -52,8 +51,8 @@ export const Header: React.FC = () => {
               <>
                 <Link to="/cart">Cart</Link>
                 <Link to="/vote">Vote</Link>
-                <Link to="/component">Component</Link>
-                <CustomSpan onClick={logoutModal.open}>Logout</CustomSpan>
+                <Link to="/mypage">Mypage</Link>
+                <Link to="/component">Parts</Link>
               </>
             ) : (
               <>
@@ -68,18 +67,6 @@ export const Header: React.FC = () => {
         </CustomToolbar>
       </CustomAppbar>
 
-      <BasicModal
-        title="警告"
-        open={logoutModal.isOpen}
-        handleClose={logoutModal.close}
-        contents={<BaseText>本当にログアウトしますか？</BaseText>}
-        footer={
-          <FlexGapWrapper>
-            <Button onClick={logout}>はい</Button>
-            <Button onClick={logoutModal.close}>いいえ</Button>
-          </FlexGapWrapper>
-        }
-      />
       <BasicModal
         title="警告"
         open={loginModal.isOpen}
