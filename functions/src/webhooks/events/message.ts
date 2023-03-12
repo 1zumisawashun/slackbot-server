@@ -56,10 +56,12 @@ const getCompletion = async ({
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
     });
+    functions.logger.log(response, "response");
+
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error(`error on getCompletion: ${error}`);
+    functions.logger.error(`error on getCompletion`, error);
     return null;
   }
 };
@@ -72,7 +74,7 @@ const replyMessage = async ({
     const result = await client.replyMessage(replyToken, message);
     return result;
   } catch (error) {
-    console.error(`error on replyMessage: ${error}`);
+    functions.logger.error(`error on replyMessage`, error);
     return null;
   }
 };
@@ -86,6 +88,8 @@ export const message = functions.https.onRequest(async (req, res) => {
   const text = event.message.text;
   const replyToken = event.replyToken;
 
+  functions.logger.log(text, "text");
+
   if (text === "いでよ") {
     const result = await replyMessage({
       replyToken,
@@ -95,7 +99,11 @@ export const message = functions.https.onRequest(async (req, res) => {
     return;
   }
 
+  functions.logger.debug("--- start getCompletion---");
+
   const response = await getCompletion({ message: text });
+
+  functions.logger.debug("--- end getCompletion---");
 
   if (response) {
     const replyMessageParams = {
