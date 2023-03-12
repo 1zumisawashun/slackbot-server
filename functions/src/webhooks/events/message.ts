@@ -9,6 +9,8 @@ import {
 } from "@line/bot-sdk";
 import * as sample_01 from "../../constants/template/sample_01.json";
 import fetch from "node-fetch";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 type GenerateResponseProps = {
   statusCode: number;
@@ -121,6 +123,7 @@ export const message = functions.https.onRequest(async (req, res) => {
       message: "success",
     };
     const generateResponseResult = generateResponse(generateResponseParams);
+    functions.logger.log(generateResponseResult, "generateResponseResult");
     res.json(generateResponseResult);
   } else {
     const replyMessageParams = {
@@ -138,6 +141,7 @@ export const message = functions.https.onRequest(async (req, res) => {
       message: "error",
     };
     const generateResponseResult = generateResponse(generateResponseParams);
+    functions.logger.log(generateResponseResult, "generateResponseResult");
     res.json(generateResponseResult);
   }
 });
