@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import { db, auth } from "../libs/firebase";
 import { LINE_LOGIN_CHANNEL_ID, LINE_LOGIN_CHANNEL_SECRET } from "../libs/line";
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
 /**
  * 認可コードをもとにLINEアクセストークンを取得

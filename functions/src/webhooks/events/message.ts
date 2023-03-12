@@ -82,7 +82,7 @@ export const message = functions.https.onRequest(async (req, res) => {
   if (event.type !== "message") return;
   if (event.message.type !== "text") return;
 
-  const userId = event.source.userId;
+  // const userId = event.source.userId;
   const text = event.message.text;
   const replyToken = event.replyToken;
 
