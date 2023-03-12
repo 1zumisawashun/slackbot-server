@@ -19,7 +19,10 @@ type GenerateResponseProps = {
 };
 
 type GetCompletionProps = {
-  message: string;
+  messages: {
+    role: string;
+    content: string;
+  }[];
 };
 
 type ReplyMessageProps = {
@@ -40,16 +43,20 @@ const generateResponse = ({
 };
 
 const getCompletion = async ({
-  message,
+  messages,
 }: GetCompletionProps): Promise<any | null> => {
   const model = "gpt-3.5-turbo";
   const url = "https://api.openai.com/v1/chat/completions";
   const body = {
     model,
     max_tokens: 1024,
-    message,
+    messages,
   };
   try {
+    functions.logger.log(
+      process.env.OPENAI_API_KEY,
+      "process.env.OPENAI_API_KEY"
+    );
     const response = await fetch(url, {
       method: "post",
       body: JSON.stringify(body),
@@ -103,7 +110,8 @@ export const message = functions.https.onRequest(async (req, res) => {
 
   functions.logger.debug("--- start getCompletion---");
 
-  const response = await getCompletion({ message: text });
+  const messages = [{ role: "user", content: text }];
+  const response = await getCompletion({ messages });
 
   functions.logger.debug("--- end getCompletion---");
 

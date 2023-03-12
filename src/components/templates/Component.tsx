@@ -4,6 +4,7 @@ import { slackNotification, VITE_SLACK_INCOMING_WEBHOOK } from "../../helpers";
 import { useFunctions, useLiff, useAuth } from "../../hooks";
 import { Button } from "../uis";
 import { DottedOneLine } from "../../themes";
+import axios from "axios";
 
 const GapWrapper = styled("div")`
   display: grid;
@@ -95,6 +96,26 @@ export const Component = () => {
     const res = await stripeProductsCreate();
     alert(res);
   };
+
+  // const handleChatGpt = async () => {
+  //   const model = "gpt-3.5-turbo";
+  //   const url = "https://api.openai.com/v1/chat/completions";
+  //   const headers = {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+  //   };
+  //   const data = {
+  //     model,
+  //     max_tokens: 1024,
+  //     messages: context,
+  //   };
+  //   try {
+  //     const response = await axios.post(url, data, { headers });
+  //     return response.data;
+  //   } catch (error) {
+  //     return null;
+  //   }
+  // };
 
   return (
     <GapWrapper>
