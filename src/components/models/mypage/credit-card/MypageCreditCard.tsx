@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import {useState,useEffect} from "react"
+import { useState, useEffect } from "react";
 import {
   CardNumberElement,
   CardExpiryElement,
@@ -32,110 +32,108 @@ const Title = styled("p")`
 `;
 
 export const MypageCreditCard = () => {
-  const { logout } = useAuth();
-  const onChange = () => console.log("test");
-  const initStripe =async()=>{
-    const stripe = await getStripe();
-    const element = stripe?.elements
-  }
-    setStripe(stripe)
-    
+  // const { logout } = useAuth();
+  // const onChange = () => console.log("test");
+  // const initStripe =async()=>{
+  //   const stripe = await getStripe();
+  //   const element = stripe?.elements
+  // }
+  //   setStripe(stripe)
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-  },[])
-  
+  // },[])
 
-  const handleRegisterCreditCard = async (): Promise<void> => {
-    if (!elements) {
-      return;
-    }
+  // const handleRegisterCreditCard = async (): Promise<void> => {
+  //   if (!elements) {
+  //     return;
+  //   }
 
-    const fieldError = Object.values(cardFormState).find(
-      (field) => field.error
-    );
-    if (fieldError) {
-      setErrorMessage(fieldError.error?.message);
-      elements.getElement(CardNumberElement)?.focus();
-      elements.getElement(CardExpiryElement)?.focus();
-      elements.getElement(CardCvcElement)?.focus();
-      return;
-    }
+  //   const fieldError = Object.values(cardFormState).find(
+  //     (field) => field.error
+  //   );
+  //   if (fieldError) {
+  //     setErrorMessage(fieldError.error?.message);
+  //     elements.getElement(CardNumberElement)?.focus();
+  //     elements.getElement(CardExpiryElement)?.focus();
+  //     elements.getElement(CardCvcElement)?.focus();
+  //     return;
+  //   }
 
-    if (isCardComplete) {
-      setLoading(true);
-    } else {
-      setErrorMessage("カード情報が不足しています。");
-      return;
-    }
+  //   if (isCardComplete) {
+  //     setLoading(true);
+  //   } else {
+  //     setErrorMessage("カード情報が不足しています。");
+  //     return;
+  //   }
 
-    const card = elements.getElement(CardNumberElement);
-    if (!card) {
-      setLoading(false);
-      setErrorMessage("カード情報の読み取りに失敗しました。");
-      return;
-    }
+  //   const card = elements.getElement(CardNumberElement);
+  //   if (!card) {
+  //     setLoading(false);
+  //     setErrorMessage("カード情報の読み取りに失敗しました。");
+  //     return;
+  //   }
 
-    const payload = await stripe.createPaymentMethod({ type: "card", card });
+  //   const payload = await stripe.createPaymentMethod({ type: "card", card });
 
-    if (payload.error) {
-      setLoading(false);
-      setErrorMessage(payload.error.message);
-      return;
-    }
+  //   if (payload.error) {
+  //     setLoading(false);
+  //     setErrorMessage(payload.error.message);
+  //     return;
+  //   }
 
-    const { id: selectedPaymentMethodID } = payload.paymentMethod;
+  //   const { id: selectedPaymentMethodID } = payload.paymentMethod;
 
-    try {
-      await validatePayments(selectedPaymentMethodID);
-    } catch (error) {
-      setLoading(false);
-      ErrorReport.capture(error);
-      setErrorMessage(
-        "既に追加されているクレジットカードです。未登録のクレジットカードのみ追加可能です。"
-      );
-      return;
-    }
+  //   try {
+  //     await validatePayments(selectedPaymentMethodID);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     ErrorReport.capture(error);
+  //     setErrorMessage(
+  //       "既に追加されているクレジットカードです。未登録のクレジットカードのみ追加可能です。"
+  //     );
+  //     return;
+  //   }
 
-    try {
-      const attachPaymentMethod = httpsCallable(
-        STRIPE_PAYMENT_METHOD_ATTACH_API
-      );
-      await attachPaymentMethod({ paymentMethodID: selectedPaymentMethodID });
-    } catch (error) {
-      setLoading(false);
-      const { details } = JSON.parse(JSON.stringify(error));
-      const stripeError = StripeErrors.find(
-        (error) => error.code === details?.decline_code
-      );
-      setErrorMessage(stripeError?.message || DEFAULT_PAYMENT_ERROR);
-      return;
-    }
+  //   try {
+  //     const attachPaymentMethod = httpsCallable(
+  //       STRIPE_PAYMENT_METHOD_ATTACH_API
+  //     );
+  //     await attachPaymentMethod({ paymentMethodID: selectedPaymentMethodID });
+  //   } catch (error) {
+  //     setLoading(false);
+  //     const { details } = JSON.parse(JSON.stringify(error));
+  //     const stripeError = StripeErrors.find(
+  //       (error) => error.code === details?.decline_code
+  //     );
+  //     setErrorMessage(stripeError?.message || DEFAULT_PAYMENT_ERROR);
+  //     return;
+  //   }
 
-    try {
-      // update customers default payment method
-      const customerUpdate = httpsCallable(STRIPE_CUSTOMER_UPDATE_API);
-      await customerUpdate({
-        invoice_settings: {
-          default_payment_method: selectedPaymentMethodID,
-        },
-      });
-      onCompletion(selectedPaymentMethodID);
-    } catch (error) {
-      setLoading(false);
-      ErrorReport.capture(error);
-      setErrorMessage(DEFAULT_PAYMENT_ERROR);
-      return;
-    }
+  //   try {
+  //     // update customers default payment method
+  //     const customerUpdate = httpsCallable(STRIPE_CUSTOMER_UPDATE_API);
+  //     await customerUpdate({
+  //       invoice_settings: {
+  //         default_payment_method: selectedPaymentMethodID,
+  //       },
+  //     });
+  //     onCompletion(selectedPaymentMethodID);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     ErrorReport.capture(error);
+  //     setErrorMessage(DEFAULT_PAYMENT_ERROR);
+  //     return;
+  //   }
 
-    setLoading(false);
-  };
+  //   setLoading(false);
+  // };
 
   return (
     <GapWrapper>
       <ComponentContainer>
         <Title>logout</Title>
-        <Elements stripe={stripe}>
+        {/* <Elements stripe={stripe}>
           <CardNumberElement
             options={{
               placeholder: "＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊",
@@ -154,7 +152,7 @@ export const MypageCreditCard = () => {
             }}
             onChange={onChange}
           />
-        </Elements>
+        </Elements> */}
       </ComponentContainer>
     </GapWrapper>
   );
