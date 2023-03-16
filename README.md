@@ -13,6 +13,7 @@ slackbot-server のリポジトリです。
 - line ログインの検証
 - stripe（cloud functions）の検証
 - firebase ver9 の検証
+- ChatGPT を使った会話のやりとり
 
 ※下記 QR コード読み取りで LINE チャネルに遷移できます。  
 ※LINE チャネルに遷移後「いでよ」メッセージを打つことで LIFF アプリを返答します。
